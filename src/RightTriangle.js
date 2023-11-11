@@ -1,3 +1,10 @@
+// TODO: Should use BigInt for squared values?
+
+// RightTriangle models the lengths and square lengths of a right angle
+// triangle.
+//
+// By default the lengths (3, 4, 5) and derived sqaures (9, 16, 25) are used
+// for (a, b, c) and (as, bs, cs) respectively where c is the hypotenuse.
 export default class RightTriangle {
 	constructor() {
 		// Length values
@@ -21,13 +28,9 @@ export default class RightTriangle {
 			return this
 		}
 
-		const oldAs = this.as
-
 		this.as = a * a
 		this.a = a
-
-		this.cs = this.as + this.bs
-		this.c = this._sqrtRound(this.cs)
+		this._recalcC()
 
 		return this
 	}
@@ -40,13 +43,9 @@ export default class RightTriangle {
 			return this
 		}
 
-		const oldBs = this.bs
-
 		this.bs = b * b
 		this.b = b
-
-		this.cs = this.as + this.bs
-		this.c = this._sqrtRound(this.cs)
+		this._recalcC()
 
 		return this
 	}
@@ -68,8 +67,7 @@ export default class RightTriangle {
 		this.as = this.cs * (1 / oldCs) * this.as
 		this.a = this._sqrtRound(this.as)
 
-		this.bs = this.cs - this.as
-		this.b = this._sqrtRound(this.bs)
+		this._recalcB()
 
 		return this
 	}
@@ -101,7 +99,7 @@ export default class RightTriangle {
 		return this
 	}
 
-	// precision sets the max number of decimal places values can have.
+	// precision sets the max number of decimal places length values can have.
 	//
 	// After setting the precision all length values will be re-evaluated based
 	// on a new rounded value of length c. If the current precision of any length
@@ -117,21 +115,19 @@ export default class RightTriangle {
 		return this
 	}
 
-	// generateShapes returns an array of polygons containing the triangle and
-	// three squares to fit within the passed bounds.
-	//
-	// Polygon c's top left point will be (0,0) and all other positions derived
-	// from it. This is intended for easy use with the SVG g tag. To offset pass
-	// an array in the form [x, y] where both values are numbers.
-	generateShapes(offset = [0, 0]) {
-		// TODO
+	_recalcA() {
+		this.as = this.cs - this.bs
+		this.a = this._sqrtRound(this.as)
+	}
 
-		return [
-			// cs
-			// as
-			// bs
-			// triangle
-		]
+	_recalcB() {
+		this.bs = this.cs - this.as
+		this.b = this._sqrtRound(this.bs)
+	}
+
+	_recalcC() {
+		this.cs = this.as + this.bs
+		this.c = this._sqrtRound(this.cs)
 	}
 
 	_round(n) {

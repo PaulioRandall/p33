@@ -1,8 +1,5 @@
 import RightTriangle from './RightTriangle.js'
 
-// 2, 2, 8
-// 45, 45, 90
-
 describe('RightTriangle', () => {
 	describe('As a leaf', () => {
 		describe('setA', () => {
