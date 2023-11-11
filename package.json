@@ -1,0 +1,34 @@
+{
+	"author": "Paul Williams",
+	"name": "p33",
+	"description": "A simple library for generating interactive visuals of Pythagorean Triples. Made to be plundered.",
+	"type": "module",
+	"license": "MIT",
+	"version": "0.1.0",
+	"keywords": [
+		"visualisation",
+		"diagram",
+		"svg",
+		"pythagorean-triples"
+	],
+	"exports": {
+		".": "./src/index.js"
+	},
+	"engines": {
+		"node": "18.18.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PaulioRandall/p33.git"
+	},
+	"scripts": {
+		"fmt": "prettier --log-level warn --write .",
+		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent --runInBand",
+		"debug": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
+		"commit": "npm run fmt && npm run test && cat ./scripts/youre-ready-to-integrate.txt"
+	},
+	"devDependencies": {
+		"jest": "29.7.0",
+		"prettier": "3.0.3"
+	}
+}
