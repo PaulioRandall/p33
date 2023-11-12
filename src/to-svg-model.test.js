@@ -1,4 +1,4 @@
-import { toSvgModel } from './generate-svg.js'
+import toSvgModel from './to-svg-model.js'
 
 describe('generate-svg', () => {
 	describe('toSvgModel', () => {

@@ -1,4 +1,4 @@
-import generatePolygons from './generate-polygons.js'
+import Victor from 'victor'
 
 // RightTriangle models the lengths and square lengths of a right angle
 // triangle.
@@ -99,12 +99,7 @@ export default class RightTriangle {
 		return this
 	}
 
-	// precision returns the max number of decimal places length values may have.
-	precision() {
-		return this._precision
-	}
-
-	// setPrecision sets the max number of decimal places length values can have.
+	// precision sets the max number of decimal places length values can have.
 	//
 	// After setting the precision all length values will be re-evaluated based
 	// on a new rounded value of length c. If the current precision of any length
@@ -114,7 +109,7 @@ export default class RightTriangle {
 	// computed inside RightTriangle then a change in precision may cause
 	// equality tests to fail where, from a behavioural view of the system, they
 	// should succeed.
-	setPrecision(dp) {
+	precision(dp) {
 		this._precision = dp
 		this.setC(this.c, true)
 		return this
@@ -132,7 +127,24 @@ export default class RightTriangle {
 	// to the upper triangle edge, and square 'b' attached to the bottom triangle
 	// edge.
 	toPolygons() {
-		return generatePolygons(this)
+		const cs = [
+			new Victor(0, this.c), // top left
+			new Victor(this.c, this.c), // top right
+			new Victor(this.c, 0), // bot right
+			new Victor(0, 0), // bot left
+		]
+
+		const rotation = Math.asin(this.a / this.c)
+		const ca = this._rotatedSquare(cs[1], this.a, rotation)
+		const cb = this._rotatedSquare(cs[2], this.b, rotation)
+
+		const tri = [
+			ca[0],
+			cb[1], // or ca[3]
+			cb[0],
+		]
+
+		return this._mapAndRoundPolygons([cs, ca, cb, tri])
 	}
 
 	_recalcA() {
@@ -158,5 +170,36 @@ export default class RightTriangle {
 	_sqrtRound(n) {
 		n = Math.sqrt(n)
 		return this._round(n)
+	}
+
+	_rotatedSquare = (origin, len, rotation) => {
+		const left = origin.clone()
+
+		const leftToTop = this._newRotationVictor(len, rotation)
+		const top = left.clone().add(leftToTop)
+
+		const topToRight = this._newRotationVictor(len, rotation + Math.PI / 2)
+		const right = top.clone().add(topToRight)
+
+		const rightToBot = this._newRotationVictor(len, rotation + Math.PI)
+		const bot = right.clone().add(rightToBot)
+
+		return [left, top, right, bot]
+	}
+
+	_newRotationVictor = (len, rotation) => {
+		return new Victor(0, len).rotate(rotation).invertX()
+	}
+
+	_mapAndRoundPolygons = (polys, dp) => {
+		return polys.map((p) => this._mapAndRoundPolygon(p))
+	}
+
+	_mapAndRoundPolygon = (poly, dp) => {
+		return poly.map((v) => this._mapAndRoundVictor(v))
+	}
+
+	_mapAndRoundVictor = (vic, dp) => {
+		return [this._round(vic.x), this._round(vic.y)]
 	}
 }

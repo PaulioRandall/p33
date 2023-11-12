@@ -1,34 +1,41 @@
-// toSvgModel accepts a set of polygons and returns a model object for
-// for constructing an SVG.
-export const toSvgModel = (polygons) => {
-	return {
-		tag: 'svg',
-		attributes: {
-			xmlns: 'http://www.w3.org/2000/svg',
-			viewBox: '0 0 1000 1000',
-			preserveAspectRatio: 'xMidYMid',
-		},
-		children: newGroup(polygons),
+// generateSvg accepts an svgModel and returns an <svg> element.
+//
+// This function will only work if there is a global 'document' object with the
+// standard set of functions.
+export default (svgModel) => {
+	checkHasCreateElement()
+	return createNode(svgModel)
+}
+
+const checkHasCreateElement = () => {
+	const hasFunc = document?.hasOwnProperty('createElement')
+	if (!hasFunc) {
+		throw new Error('[P33] Missing document.createElement')
 	}
 }
 
-const newGroup = (polygons) => {
-	return [
-		{
-			tag: 'g',
-			children: polygons.map(newPolygon),
-		},
-	]
+const createNode = (model) => {
+	const node = document.createElement(model.tag)
+	setAttributes(node, model)
+	appendChildren(node, model)
 }
 
-const newPolygon = (polygon) => {
-	return {
-		tag: 'polygon',
-		attributes: {
-			points: polygon.map((p) => `${p[0]},${p[1]}`).join(' '),
-		},
+const setAttributes = (node, { attributes }) => {
+	if (!attributes) {
+		return
+	}
+
+	for (const name in attributes) {
+		node.setAttribute(name, attributes[name])
 	}
 }
 
-// generateSvg returns an SVG for embedding in a
-export const generateSvg = (svgElements) => {}
+const appendChildren = (node, { children }) => {
+	if (!children) {
+		return
+	}
+
+	for (const child of children) {
+		node.append(createNode(child))
+	}
+}
