@@ -2,64 +2,62 @@ import RightTriangle from './RightTriangle.js'
 import generatePolygons from './generate-polygons.js'
 
 describe('generatePolygons', () => {
-	test('1st square #1', () => {
+	test('1st square (c)', () => {
 		const rt = new RightTriangle()
 
 		const act = generatePolygons(rt)
 		const exp = [
-			[0, 0],
-			[5, 0],
-			[5, 5],
 			[0, 5],
-			[0, 0]
-		]
-		
-		expect(act[0]).toEqual(exp)
-	})
-
-	test('1st square #2', () => {
-		const rt = new RightTriangle()
-		rt.setC(20)
-
-		const act = generatePolygons(rt)
-		const exp = [
-			[0, 0],
-			[20, 0],
-			[20, 20],
-			[0, 20],
-			[0, 0]
-		]
-
-		expect(act[0]).toEqual(exp)
-	})
-
-	test('2nd square', () => {
-		const rt = new RightTriangle()
-		
-		const act = generatePolygons(rt)
-		const exp = [
+			[5, 5],
 			[5, 0],
-			[7.4, -1.8]
-			[9.7, 0],
-			[7.4, 1.8],
-			[5, 0]
+			[0, 0],
+			[0, 5],
+		]
+
+		expect(act[0]).toEqual(exp)
+	})
+
+	test('2nd square (a)', () => {
+		const rt = new RightTriangle()
+
+		const act = generatePolygons(rt)
+		const exp = [
+			[5, 5],
+			[6.8, 7.4],
+			[9.2, 5.6],
+			[7.4, 3.2],
+			[5, 5],
 		]
 
 		expect(act[1]).toEqual(exp)
 	})
 
-	test('3rd square', () => {
+	test('3rd square (b)', () => {
 		const rt = new RightTriangle()
-		
+
+		const act = generatePolygons(rt)
+		const exp = [
+			[5, 0],
+			[7.4, 3.2],
+			[10.6, 0.8],
+			[8.2, -2.4],
+			[5, 0],
+		]
+
+		expect(act[2]).toEqual(exp)
+	})
+
+	test('Triangle', () => {
+		const rt = new RightTriangle()
+
 		const act = generatePolygons(rt)
 		const exp = [
 			[5, 5],
-			[7.4, -1.8],
-			[9.7, 5],
-			[7.4, 1.8],
-			[5, 5]
+			[7.4, 3.2],
+			[5, 0],
+			[5, 5],
 		]
 
-		//expect(act[2]).toEqual(exp)
+		expect(act[3]).toEqual(exp)
 	})
 })

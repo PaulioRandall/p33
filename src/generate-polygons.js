@@ -18,11 +18,11 @@ export default (rt) => {
 	checkRightTriangle(rt)
 
 	const cs = [
-		new Victor(0, rt.c),
-		new Victor(rt.c, rt.c),
-		new Victor(rt.c, 0), 
-		new Victor(0, 0),
-		new Victor(0, rt.c),
+		new Victor(0, rt.c), // top left
+		new Victor(rt.c, rt.c), // top right
+		new Victor(rt.c, 0), // bot right
+		new Victor(0, 0), // bot left
+		new Victor(0, rt.c), // top left
 	]
 
 	const ca = rotatedSquare(cs[1], rt.a, Math.asin(rt.a / rt.c))
@@ -30,9 +30,9 @@ export default (rt) => {
 
 	const tri = [
 		ca[0],
-		cb[0],
 		cb[1], // or ca[3]
-		ca[0]
+		cb[0],
+		ca[0],
 	]
 
 	return mapAndRoundPolygons([cs, ca, cb, tri], rt.precision())
@@ -40,21 +40,17 @@ export default (rt) => {
 
 const rotatedSquare = (origin, len, rotation) => {
 	const left_to_top = new Victor(0, len).rotate(rotation).invertX()
-	const top_to_right = new Victor(0, len).rotate(rotation + (Math.PI / 2)).invertX()
+	const top_to_right = new Victor(0, len)
+		.rotate(rotation + Math.PI / 2)
+		.invertX()
 	const right_to_bot = new Victor(0, len).rotate(rotation + Math.PI).invertX()
-	
+
 	const left = origin.clone()
 	const top = left.clone().add(left_to_top)
 	const right = top.clone().add(top_to_right)
 	const bot = right.clone().add(right_to_bot)
 
-	return [
-		left,
-		top,
-		right, 
-		bot,
-		left,
-	]
+	return [left, top, right, bot, left]
 }
 
 const checkRightTriangle = (rt) => {
@@ -89,6 +85,5 @@ const round = (n, dp) => {
 }
 
 const radiansToDegrees = (rads) => {
-  return rads * (180/Math.PI);
+	return rads * (180 / Math.PI)
 }
-     
