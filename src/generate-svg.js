@@ -3,6 +3,11 @@
 export const toSvgModel = (polygons) => {
 	return {
 		tag: 'svg',
+		attributes: {
+			xmlns: 'http://www.w3.org/2000/svg',
+			viewBox: '0 0 1000 1000',
+			preserveAspectRatio: 'xMidYMid',
+		},
 		children: newGroup(polygons),
 	}
 }
@@ -19,7 +24,9 @@ const newGroup = (polygons) => {
 const newPolygon = (polygon) => {
 	return {
 		tag: 'polygon',
-		points: polygon.map((p) => `${p[0]},${p[1]}`).join(' '),
+		attributes: {
+			points: polygon.map((p) => `${p[0]},${p[1]}`).join(' '),
+		},
 	}
 }
 
