@@ -77,17 +77,17 @@ describe('RightTriangle', () => {
 			})
 		})
 
-		describe('precision', () => {
+		describe('setPrecision', () => {
 			test('adds recalculates with correct number of decimal points', () => {
 				const t = new RightTriangle()
-				t.precision(3)
+				t.setPrecision(3)
 				t.setA(4)
 
 				expect(t.a).toEqual(4)
 				expect(t.b).toEqual(4)
 				expect(t.c).toEqual(5.657)
 
-				t.precision(2)
+				t.setPrecision(2)
 
 				expect(t.a).toEqual(4)
 				expect(t.b).toEqual(4)

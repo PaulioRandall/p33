@@ -1,10 +1,5 @@
-import RightTriangle from './RightTriangle'
-
-// ######################################
-// ######################################
-// TODO: Just create the squares with one point in the correct place then use
-//       this func to rotate them around that point:
-//       https://stackoverflow.com/questions/4465931/rotate-rectangle-around-a-point
+import Victor from 'victor'
+import RightTriangle from './RightTriangle.js'
 
 // generatePolygons returns an array of polygons representing the passed right
 // angle triangle.
@@ -19,26 +14,47 @@ import RightTriangle from './RightTriangle'
 //
 // Because these are polygons the last item in each array will be the same as
 // the first. Splice it off if you just need an array of points.
-export default generatePolygons = (rt) => {
+export default (rt) => {
 	checkRightTriangle(rt)
-	//offset = checkOffset(offset)
 
-	const cSquare = newSquarePoly([0, 0], rt.c)
-	const triangle = newRightTrianglePoly(cSquare[1], rt.a, rt.b, rt.c)
+	const cs = [
+		new Victor(0, rt.c),
+		new Victor(rt.c, rt.c),
+		new Victor(rt.c, 0), 
+		new Victor(0, 0),
+		new Victor(0, rt.c),
+	]
 
-	const aSquare = rotatePolygon(
-		newSquarePoly(cSquare[1], rt.a),
-		cSquare[1],
-		Math.asin(b / c) // TODO: is correct?
-	)
+	const ca = rotatedSquare(cs[1], rt.a, Math.asin(rt.a / rt.c))
+	const cb = rotatedSquare(cs[2], rt.b, Math.asin(rt.a / rt.c))
 
-	const bSquare = rotatePolygon(
-		translatePolygon(newSquarePoly(cSquare[2], rt.b), [0, -rt.b]),
-		cSquare[2],
-		Math.asin(a / c) // TODO: is correct?
-	)
+	const tri = [
+		ca[0],
+		cb[0],
+		cb[1], // or ca[3]
+		ca[0]
+	]
 
-	return [cSquare, aSquare, bSquare, triangle]
+	return mapAndRoundPolygons([cs, ca, cb, tri], rt.precision())
+}
+
+const rotatedSquare = (origin, len, rotation) => {
+	const left_to_top = new Victor(0, len).rotate(rotation).invertX()
+	const top_to_right = new Victor(0, len).rotate(rotation + (Math.PI / 2)).invertX()
+	const right_to_bot = new Victor(0, len).rotate(rotation + Math.PI).invertX()
+	
+	const left = origin.clone()
+	const top = left.clone().add(left_to_top)
+	const right = top.clone().add(top_to_right)
+	const bot = right.clone().add(right_to_bot)
+
+	return [
+		left,
+		top,
+		right, 
+		bot,
+		left,
+	]
 }
 
 const checkRightTriangle = (rt) => {
@@ -51,92 +67,28 @@ const checkRightTriangle = (rt) => {
 	}
 }
 
-const newSquarePoly = ([x, y], len) => [
-	[x, y],
-	[x + len, y],
-	[x + len, y + len],
-	[x, y + len],
-	[x, y],
-]
-
-const newRightTrianglePoly = (x, y, a, b, c) => {
-	return [[x, y], [x, y + c], calcRightAnglePoint(x, y, a, b, c), [x, y]]
-}
-
-// translatePolygon moves a polygon by the passed x and y.
-const translatePolygon = (poly, [x, y]) => {
-	return poly.map((point) => [point.x + x, point.y + y])
-}
-
-// rotatePolygon rotates a polygon around an origin point.
-//
-// Source: https://stackoverflow.com/questions/4465931/rotate-rectangle-around-a-point
-const rotatePolygon = (poly, origin, rads) => {
-	return poly.map((point) => rotatePoint(point, origin, rads))
-}
-
-// rotatePoint rotates a single point around an origin point.
-//
-// Source: https://stackoverflow.com/questions/4465931/rotate-rectangle-around-a-point
-const rotatePoint = ([px, py], [ox, oy], rads) => {
-	const angle = (rads * Math.PI) / 180.0
-	return [
-		Math.cos(angle) * (px - ox) - Math.sin(angle) * (py - oy) + ox,
-		Math.sin(angle) * (px - ox) + Math.cos(angle) * (py - oy) + oy,
-	]
-}
-
-const calcRightAnglePoint = (x, y, a, b, c) => {
-	const radsOfOppositeA = radiansRemainingInRightAngle(a, c)
-	const bo = lengthOfOpposite(radsOfOppositeA, b)
-	const ba = lengthOfAdjacent(bo, b)
-
-	return [x + ba, y + bo]
-}
-
-const radiansRemainingInRightAngle = (o, h) => {
-	return degreesToRadians(90) - Math.asin(o / h)
-}
-
-const radiansToDegrees = (rads) => {
-	return rads * (180 / Math.PI)
-}
-
-const degreesToRadians = (degs) => {
-	return degs * (Math.PI / 180)
-}
-
-const lengthOfOpposite = (rads, h) => {
-	return Math.sin(rads) * h
-}
-
-const lengthOfAdjacent = (o, h) => {
-	return Math.sqrt(h * h - o * o)
-}
-
-/*
-const checkOffset = (offset) => {
-	if (!offset) {
-		return [0, 0]
-	}
-
-	const expected = 'Expected two number offset array'
-
-	if (!Array.isArray(offset)) {
-		throw newError(`${expected} but got '${typeof offset}'`)
-	}
-
-	if (offset.length !== 2) {
-		throw newError(`${expected} but got one of length ${offset.length}`)
-	}
-
-	if (typeof offset[0] !== 'number' || typeof offset[1] !== 'number') {
-		throw newError(`${expected} but got items of the wrong type '${offset}'`)
-	}
-
-	return offset
-}
-*/
 const newError = (msg) => {
 	return new Error(`[RightTriangle] ${msg}`)
 }
+
+const mapAndRoundPolygons = (polys, dp) => {
+	return polys.map((p) => mapAndRoundPolygon(p, dp))
+}
+
+const mapAndRoundPolygon = (poly, dp) => {
+	return poly.map((v) => mapAndRoundVictor(v, dp))
+}
+
+const mapAndRoundVictor = (vic, dp) => {
+	return [round(vic.x, dp), round(vic.y, dp)]
+}
+
+const round = (n, dp) => {
+	const dpMod = Math.pow(10, dp)
+	return Math.round(n * dpMod) / dpMod
+}
+
+const radiansToDegrees = (rads) => {
+  return rads * (180/Math.PI);
+}
+     

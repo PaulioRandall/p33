@@ -1,5 +1,3 @@
-// TODO: Should use BigInt for squared values?
-
 // RightTriangle models the lengths and square lengths of a right angle
 // triangle.
 //
@@ -99,7 +97,12 @@ export default class RightTriangle {
 		return this
 	}
 
-	// precision sets the max number of decimal places length values can have.
+	// precision returns the max number of decimal places length values may have.
+	precision() {
+		return this._precision
+	}
+
+	// setPrecision sets the max number of decimal places length values can have.
 	//
 	// After setting the precision all length values will be re-evaluated based
 	// on a new rounded value of length c. If the current precision of any length
@@ -109,7 +112,7 @@ export default class RightTriangle {
 	// computed inside RightTriangle then a change in precision may cause
 	// equality tests to fail where, from a behavioural view of the system, they
 	// should succeed.
-	precision(dp) {
+	setPrecision(dp) {
 		this._precision = dp
 		this.setC(this.c, true)
 		return this
