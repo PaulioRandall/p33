@@ -11,22 +11,25 @@
 export default (polygons) => {
 	return {
 		tag: 'svg',
+		namespaceURI: 'http://www.w3.org/2000/svg',
 		attributes: {
-			xmlns: 'http://www.w3.org/2000/svg',
+			'xmlns:xlink': 'http://www.w3.org/1999/xlink',
 			viewBox: '0 0 1000 1000',
 			preserveAspectRatio: 'xMidYMid',
 		},
-		children: newGroup(polygons),
+		children: newGroups(polygons),
 	}
 }
 
+const newGroups = (polygons) => {
+	return [newGroup(polygons)]
+}
+
 const newGroup = (polygons) => {
-	return [
-		{
-			tag: 'g',
-			children: polygons.map(newPolygon),
-		},
-	]
+	return {
+		tag: 'g',
+		children: polygons.map(newPolygon),
+	}
 }
 
 const newPolygon = (polygon) => {
