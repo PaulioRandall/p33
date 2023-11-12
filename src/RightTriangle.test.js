@@ -105,7 +105,6 @@ describe('RightTriangle', () => {
 					[5, 5],
 					[5, 0],
 					[0, 0],
-					[0, 5],
 				]
 
 				expect(act[0]).toEqual(exp)
@@ -120,7 +119,6 @@ describe('RightTriangle', () => {
 					[6.8, 7.4],
 					[9.2, 5.6],
 					[7.4, 3.2],
-					[5, 5],
 				]
 
 				expect(act[1]).toEqual(exp)
@@ -135,7 +133,6 @@ describe('RightTriangle', () => {
 					[7.4, 3.2],
 					[10.6, 0.8],
 					[8.2, -2.4],
-					[5, 0],
 				]
 
 				expect(act[2]).toEqual(exp)
@@ -149,7 +146,6 @@ describe('RightTriangle', () => {
 					[5, 5],
 					[7.4, 3.2],
 					[5, 0],
-					[5, 5],
 				]
 
 				expect(act[3]).toEqual(exp)

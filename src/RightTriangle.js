@@ -131,9 +131,6 @@ export default class RightTriangle {
 	// on the left, the triangle attached to the right edge, square 'a' attached
 	// to the upper triangle edge, and square 'b' attached to the bottom triangle
 	// edge.
-	//
-	// Because these are polygons the last item in each array will be the same as
-	// the first. Splice it off if you just need an array of points.
 	toPolygons() {
 		return generatePolygons(this)
 	}

@@ -9,8 +9,7 @@ describe('generate-svg', () => {
 					[5, 5],
 					[5, 0],
 					[0, 0],
-					[0, 5],
-				]
+				],
 			]
 
 			const exp = {
@@ -22,10 +21,10 @@ describe('generate-svg', () => {
 							{
 								tag: 'polygon',
 								points: '0,5 5,5 5,0 0,0',
-							}
-						]
-					}
-				]
+							},
+						],
+					},
+				],
 			}
 
 			const act = toSvgModel(polygons)

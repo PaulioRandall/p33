@@ -6,7 +6,6 @@ export default (rt) => {
 		new Victor(rt.c, rt.c), // top right
 		new Victor(rt.c, 0), // bot right
 		new Victor(0, 0), // bot left
-		new Victor(0, rt.c), // top left
 	]
 
 	const rotation = Math.asin(rt.a / rt.c)
@@ -17,7 +16,6 @@ export default (rt) => {
 		ca[0],
 		cb[1], // or ca[3]
 		cb[0],
-		ca[0],
 	]
 
 	return mapAndRoundPolygons([cs, ca, cb, tri], rt.precision())
@@ -35,7 +33,7 @@ const rotatedSquare = (origin, len, rotation) => {
 	const rightToBot = newRotationVictor(len, rotation + Math.PI)
 	const bot = right.clone().add(rightToBot)
 
-	return [left, top, right, bot, left]
+	return [left, top, right, bot]
 }
 
 const newRotationVictor = (len, rotation) => {
