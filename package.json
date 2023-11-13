@@ -1,7 +1,7 @@
 {
 	"author": "Paul Williams",
 	"name": "p33",
-	"description": "A simple library for generating interactive visuals of Pythagorean Triples. Made to be plundered.",
+	"description": "A simple library for generating interactive visuals of Pythagorean Triangles. Made to be plundered.",
 	"type": "module",
 	"license": "MIT",
 	"version": "0.1.0",

@@ -1,3 +1,5 @@
+import relayoutPolygons from './relayout-polygons.js'
+
 // toSvgModel accepts a set of polygons and returns a model object for
 // constructing an SVG.
 //
@@ -9,13 +11,22 @@
 // to build their own SVGs. For example, a Svelte component can easily be built
 // from a model that includes reactive parts.
 export default (polygons) => {
+	const size = relayoutPolygons(polygons)
+	return newSvg(polygons, size)
+}
+
+const newSvg = (polygons, [width, height]) => {
 	return {
 		tag: 'svg',
 		namespaceURI: 'http://www.w3.org/2000/svg',
 		attributes: {
 			'xmlns:xlink': 'http://www.w3.org/1999/xlink',
-			viewBox: '0 0 1000 1000',
+			viewBox: `0 0 ${width} ${height}`,
 			preserveAspectRatio: 'xMidYMid',
+		},
+		style: {
+			width: '100%',
+			height: '100%',
 		},
 		children: newGroups(polygons),
 	}

@@ -17,8 +17,12 @@ describe('generate-svg', () => {
 				namespaceURI: 'http://www.w3.org/2000/svg',
 				attributes: {
 					'xmlns:xlink': 'http://www.w3.org/1999/xlink',
-					viewBox: '0 0 1000 1000',
+					viewBox: '0 0 5 5',
 					preserveAspectRatio: 'xMidYMid',
+				},
+				style: {
+					width: '100%',
+					height: '100%',
 				},
 				children: [
 					{
@@ -66,8 +70,12 @@ describe('generate-svg', () => {
 				namespaceURI: 'http://www.w3.org/2000/svg',
 				attributes: {
 					'xmlns:xlink': 'http://www.w3.org/1999/xlink',
-					viewBox: '0 0 1000 1000',
+					viewBox: '0 0 100 100',
 					preserveAspectRatio: 'xMidYMid',
+				},
+				style: {
+					width: '100%',
+					height: '100%',
 				},
 				children: [
 					{

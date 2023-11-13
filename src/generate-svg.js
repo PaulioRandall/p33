@@ -8,8 +8,8 @@ export default (svgModel) => {
 }
 
 const checkHasCreateElementNS = () => {
-	if (!!!document?.createElementNS) {
-		throw new Error('[P33] Missing document.createElement')
+	if (!document?.createElementNS) {
+		throw new Error('[P33] Missing document.createElementNS')
 	}
 }
 
