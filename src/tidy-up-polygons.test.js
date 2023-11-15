@@ -1,6 +1,6 @@
-import relayoutPolygons from './relayout-polygons.js'
+import tidyUpPolygons from './tidy-up-polygons.js'
 
-describe('relayoutPolygons', () => {
+describe('tidyUpPolygons', () => {
 	test('properly translates polygons', () => {
 		const givenPolygons = [
 			[
@@ -42,7 +42,7 @@ describe('relayoutPolygons', () => {
 			],
 		]
 
-		relayoutPolygons(givenPolygons)
+		tidyUpPolygons(givenPolygons)
 		expect(givenPolygons).toEqual(expPolygons)
 	})
 
@@ -64,7 +64,7 @@ describe('relayoutPolygons', () => {
 
 		const expSize = [25, 15]
 
-		const actSize = relayoutPolygons(givenPolygons)
+		const actSize = tidyUpPolygons(givenPolygons)
 		expect(expSize).toEqual(actSize)
 	})
 })

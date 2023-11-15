@@ -95,11 +95,11 @@ describe('RightTriangle', () => {
 			})
 		})
 
-		describe('toPolygons', () => {
+		describe('generatePolygons', () => {
 			test('1st square (c)', () => {
 				const rt = new RightTriangle()
 
-				const act = rt.toPolygons()
+				const act = rt.generatePolygons()
 				const exp = [
 					[0, 5],
 					[5, 5],
@@ -113,7 +113,7 @@ describe('RightTriangle', () => {
 			test('2nd square (a)', () => {
 				const rt = new RightTriangle()
 
-				const act = rt.toPolygons()
+				const act = rt.generatePolygons()
 				const exp = [
 					[5, 5],
 					[6.8, 7.4],
@@ -127,7 +127,7 @@ describe('RightTriangle', () => {
 			test('3rd square (b)', () => {
 				const rt = new RightTriangle()
 
-				const act = rt.toPolygons()
+				const act = rt.generatePolygons()
 				const exp = [
 					[5, 0],
 					[7.4, 3.2],
@@ -141,7 +141,7 @@ describe('RightTriangle', () => {
 			test('Triangle', () => {
 				const rt = new RightTriangle()
 
-				const act = rt.toPolygons()
+				const act = rt.generatePolygons()
 				const exp = [
 					[5, 5],
 					[7.4, 3.2],

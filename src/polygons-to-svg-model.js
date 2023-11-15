@@ -1,7 +1,7 @@
-import relayoutPolygons from './relayout-polygons.js'
+import tidyUpPolygons from './tidy-up-polygons.js'
 
-// toSvgModel accepts a set of polygons and returns a model object for
-// constructing an SVG.
+// polygons-to-svg-model accepts a set of polygons and returns a model object
+// for constructing an SVG.
 //
 // This intermediate step is a precursor to the generateSvg function that
 // actually creates an SVG from JavaScript Elements.
@@ -11,7 +11,7 @@ import relayoutPolygons from './relayout-polygons.js'
 // to build their own SVGs. For example, a Svelte component can easily be built
 // from a model that includes reactive parts.
 export default (polygons) => {
-	const size = relayoutPolygons(polygons)
+	const size = tidyUpPolygons(polygons)
 	return newSvg(polygons, size)
 }
 

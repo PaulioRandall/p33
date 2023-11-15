@@ -115,18 +115,17 @@ export default class RightTriangle {
 		return this
 	}
 
-	// toPolygons returns an array of polygons representing the passed right
-	// angle triangle.
+	// generatePolygons returns an array of polygons representing the passed
+	// right angle triangle.
 	//
 	// The result will include the triangle and three squares. It is primarily
 	// intended for easy use with the SVG g tag.
 	//
-	// Polygon c's bottom left point will be (0,0) with all other positions
-	// relative to it. The collection will start with the hypotenuse square 'c'
-	// on the left, the triangle attached to the right edge, square 'a' attached
-	// to the upper triangle edge, and square 'b' attached to the bottom triangle
-	// edge.
-	toPolygons() {
+	// Polygon c's top left point will be (0,0) with all other positions relative
+	// to it. The collection will start with the hypotenuse square 'c' on the
+	// left, the triangle attached to the right edge, square 'a' attached to the
+	// upper triangle edge, and square 'b' attached to the bottom triangle edge.
+	generatePolygons() {
 		const cs = [
 			new Victor(0, this.c), // top left
 			new Victor(this.c, this.c), // top right

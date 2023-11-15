@@ -1,4 +1,4 @@
-// generateSvg accepts an svgModel and returns an <svg> element.
+// svg-model-to-svg accepts an svgModel and returns an <svg> element.
 //
 // This function will only work if there is a global 'document' object with the
 // standard set of functions.

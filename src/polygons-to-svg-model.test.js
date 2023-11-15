@@ -1,6 +1,6 @@
-import toSvgModel from './to-svg-model.js'
+import polygonsToSvgModel from './polygons-to-svg-model.js'
 
-describe('toSvgModel', () => {
+describe('polygonsToSvgModel', () => {
 	test('creates simple polygon model', () => {
 		const polygons = [
 			[
@@ -38,7 +38,7 @@ describe('toSvgModel', () => {
 			],
 		}
 
-		const act = toSvgModel(polygons)
+		const act = polygonsToSvgModel(polygons)
 		expect(act).toEqual(exp)
 	})
 
@@ -103,7 +103,7 @@ describe('toSvgModel', () => {
 			],
 		}
 
-		const act = toSvgModel(polygons)
+		const act = polygonsToSvgModel(polygons)
 		expect(act).toEqual(exp)
 	})
 })
