@@ -96,89 +96,54 @@ describe('RightTriangle', () => {
 		})
 
 		describe('generatePolygons', () => {
-			test('has correct type', () => {
+			test('returns correct polygon object', () => {
 				const rt = new RightTriangle()
 
 				const act = rt.generatePolygons()
-				const exp = [
-					[5, 5],
-					[6.8, 7.4],
-					[9.2, 5.6],
-					[7.4, 3.2],
-				]
+				const exp = {
+					type: 'RightTriangle',
+					a: {
+						type: 'Square',
+						length: 3,
+						coordinates: [
+							[5, 5],
+							[6.8, 7.4],
+							[9.2, 5.6],
+							[7.4, 3.2],
+						],
+					},
+					b: {
+						type: 'Square',
+						length: 4,
+						coordinates: [
+							[5, 0],
+							[7.4, 3.2],
+							[10.6, 0.8],
+							[8.2, -2.4],
+						],
+					},
+					c: {
+						type: 'Square',
+						length: 5,
+						coordinates: [
+							[0, 5],
+							[5, 5],
+							[5, 0],
+							[0, 0],
+						],
+					},
+					t: {
+						type: 'Triangle',
+						length: null,
+						coordinates: [
+							[5, 5],
+							[7.4, 3.2],
+							[5, 0],
+						],
+					},
+				}
 
-				expect(act).toHaveProperty('type', 'RightTriangle')
-			})
-
-			test('square a', () => {
-				const rt = new RightTriangle()
-
-				const act = rt.generatePolygons()
-				const exp = [
-					[5, 5],
-					[6.8, 7.4],
-					[9.2, 5.6],
-					[7.4, 3.2],
-				]
-
-				expect(act).toHaveProperty('a', {
-					type: 'Square',
-					length: 3,
-					coordinates: exp,
-				})
-			})
-
-			test('square b', () => {
-				const rt = new RightTriangle()
-
-				const act = rt.generatePolygons()
-				const exp = [
-					[5, 0],
-					[7.4, 3.2],
-					[10.6, 0.8],
-					[8.2, -2.4],
-				]
-
-				expect(act).toHaveProperty('b', {
-					type: 'Square',
-					length: 4,
-					coordinates: exp,
-				})
-			})
-
-			test('square c', () => {
-				const rt = new RightTriangle()
-
-				const act = rt.generatePolygons()
-				const exp = [
-					[0, 5],
-					[5, 5],
-					[5, 0],
-					[0, 0],
-				]
-
-				expect(act).toHaveProperty('c', {
-					type: 'Square',
-					length: 5,
-					coordinates: exp,
-				})
-			})
-
-			test('Triangle', () => {
-				const rt = new RightTriangle()
-
-				const act = rt.generatePolygons()
-				const exp = [
-					[5, 5],
-					[7.4, 3.2],
-					[5, 0],
-				]
-
-				expect(act).toHaveProperty('t', {
-					type: 'Triangle',
-					length: null,
-					coordinates: exp,
-				})
+				expect(exp).toEqual(act)
 			})
 		})
 	})
