@@ -126,7 +126,7 @@ export default class RightTriangle {
 	// left, the triangle attached to the right edge, square 'a' attached to the
 	// upper triangle edge, and square 'b' attached to the bottom triangle edge.
 	generatePolygons() {
-		const cs = [
+		const c = [
 			new Victor(0, this.c), // top left
 			new Victor(this.c, this.c), // top right
 			new Victor(this.c, 0), // bot right
@@ -134,16 +134,21 @@ export default class RightTriangle {
 		]
 
 		const rotation = Math.asin(this.a / this.c)
-		const ca = this._rotatedSquare(cs[1], this.a, rotation)
-		const cb = this._rotatedSquare(cs[2], this.b, rotation)
+		const a = this._rotatedSquare(c[1], this.a, rotation)
+		const b = this._rotatedSquare(c[2], this.b, rotation)
 
-		const tri = [
-			ca[0],
-			cb[1], // or ca[3]
-			cb[0],
+		const t = [
+			a[0],
+			b[1], // or c[3]
+			b[0],
 		]
 
-		return this._mapAndRoundPolygons([cs, ca, cb, tri])
+		return {
+			a: this._mapAndRoundPolygon(a),
+			b: this._mapAndRoundPolygon(b),
+			c: this._mapAndRoundPolygon(c),
+			t: this._mapAndRoundPolygon(t),
+		}
 	}
 
 	_recalcA() {
@@ -188,10 +193,6 @@ export default class RightTriangle {
 
 	_newRotationVictor = (len, rotation) => {
 		return new Victor(0, len).rotate(rotation).invertX()
-	}
-
-	_mapAndRoundPolygons = (polys, dp) => {
-		return polys.map((p) => this._mapAndRoundPolygon(p))
 	}
 
 	_mapAndRoundPolygon = (poly, dp) => {

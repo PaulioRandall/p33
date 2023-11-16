@@ -2,14 +2,14 @@ import polygonsToSvgModel from './polygons-to-svg-model.js'
 
 describe('polygonsToSvgModel', () => {
 	test('creates simple polygon model', () => {
-		const polygons = [
-			[
+		const polygons = {
+			a: [
 				[0, 5],
 				[5, 5],
 				[5, 0],
 				[0, 0],
 			],
-		]
+		}
 
 		const exp = {
 			tag: 'svg',
@@ -43,26 +43,26 @@ describe('polygonsToSvgModel', () => {
 	})
 
 	test('creates simple polygon model', () => {
-		const polygons = [
-			[
+		const polygons = {
+			a: [
 				[0, 5],
 				[5, 5],
 				[5, 0],
 				[0, 0],
 			],
-			[
+			b: [
 				[1, 2],
 				[3, 4],
 				[5, 6],
 				[7, 8],
 				[9, 0],
 			],
-			[
+			c: [
 				[0, 0],
 				[100, 0],
 				[0, 100],
 			],
-		]
+		}
 
 		const exp = {
 			tag: 'svg',

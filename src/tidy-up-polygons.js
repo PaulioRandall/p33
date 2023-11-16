@@ -24,8 +24,8 @@ const findBounds = (polygons) => {
 }
 
 const updateBoundsFromPolygons = (polygons, bounds) => {
-	for (const poly of polygons) {
-		for (const point of poly) {
+	for (const name in polygons) {
+		for (const point of polygons[name]) {
 			updateBoundsFromPoint(point, bounds)
 		}
 	}
@@ -40,8 +40,8 @@ const updateBoundsFromPoint = (point, bounds) => {
 }
 
 const translatePolygons = (polygons, offset) => {
-	for (const poly of polygons) {
-		for (const point of poly) {
+	for (const name in polygons) {
+		for (const point of polygons[name]) {
 			translatePoint(point, offset)
 		}
 	}

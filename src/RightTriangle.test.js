@@ -96,21 +96,7 @@ describe('RightTriangle', () => {
 		})
 
 		describe('generatePolygons', () => {
-			test('1st square (c)', () => {
-				const rt = new RightTriangle()
-
-				const act = rt.generatePolygons()
-				const exp = [
-					[0, 5],
-					[5, 5],
-					[5, 0],
-					[0, 0],
-				]
-
-				expect(act[0]).toEqual(exp)
-			})
-
-			test('2nd square (a)', () => {
+			test('square a', () => {
 				const rt = new RightTriangle()
 
 				const act = rt.generatePolygons()
@@ -121,10 +107,10 @@ describe('RightTriangle', () => {
 					[7.4, 3.2],
 				]
 
-				expect(act[1]).toEqual(exp)
+				expect(act).toHaveProperty('a', exp)
 			})
 
-			test('3rd square (b)', () => {
+			test('square b', () => {
 				const rt = new RightTriangle()
 
 				const act = rt.generatePolygons()
@@ -135,7 +121,21 @@ describe('RightTriangle', () => {
 					[8.2, -2.4],
 				]
 
-				expect(act[2]).toEqual(exp)
+				expect(act).toHaveProperty('b', exp)
+			})
+
+			test('square c', () => {
+				const rt = new RightTriangle()
+
+				const act = rt.generatePolygons()
+				const exp = [
+					[0, 5],
+					[5, 5],
+					[5, 0],
+					[0, 0],
+				]
+
+				expect(act).toHaveProperty('c', exp)
 			})
 
 			test('Triangle', () => {
@@ -148,7 +148,7 @@ describe('RightTriangle', () => {
 					[5, 0],
 				]
 
-				expect(act[3]).toEqual(exp)
+				expect(act).toHaveProperty('t', exp)
 			})
 		})
 	})

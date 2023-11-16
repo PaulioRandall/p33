@@ -39,11 +39,17 @@ const newGroups = (polygons) => {
 const newGroup = (polygons) => {
 	return {
 		tag: 'g',
-		children: polygons.map(newPolygon),
+		children: polygonsToElements(polygons),
 	}
 }
 
-const newPolygon = (polygon) => {
+const polygonsToElements = (polygons) => {
+	return Object.entries(polygons).map(([name, poly]) => {
+		return polygonToElement(name, poly)
+	})
+}
+
+const polygonToElement = (name, polygon) => {
 	return {
 		tag: 'polygon',
 		attributes: {
