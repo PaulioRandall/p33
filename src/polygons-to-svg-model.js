@@ -44,9 +44,9 @@ const newGroup = (polygons) => {
 }
 
 const polygonsToElements = (polygons) => {
-	return Object.entries(polygons).map(([name, poly]) => {
-		return polygonToElement(name, poly)
-	})
+	return Object.entries(polygons)
+		.filter(([name, _]) => name !== 'type')
+		.map(([name, poly]) => polygonToElement(name, poly))
 }
 
 const polygonToElement = (name, poly) => {

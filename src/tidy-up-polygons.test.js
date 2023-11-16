@@ -3,6 +3,7 @@ import tidyUpPolygons from './tidy-up-polygons.js'
 describe('tidyUpPolygons', () => {
 	test('properly translates coordinates', () => {
 		const givenPolygons = {
+			type: 'RightTriangle',
 			a: {
 				coordinates: [
 					[0, 5],
@@ -29,6 +30,7 @@ describe('tidyUpPolygons', () => {
 		}
 
 		const expPolygons = {
+			type: 'RightTriangle',
 			a: {
 				coordinates: [
 					[10, 15],
@@ -60,6 +62,7 @@ describe('tidyUpPolygons', () => {
 
 	test('returns expected size', () => {
 		const givenPolygons = {
+			type: 'RightTriangle',
 			a: {
 				coordinates: [
 					[0, 5],

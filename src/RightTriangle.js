@@ -119,11 +119,11 @@ export default class RightTriangle {
 	// right angle triangle.
 	//
 	// The result will be in the form { a: {}, b: {}, c: {}, t: {} } where each
-	// inner object is { length: n, polygons: [...] }, n is the length of the
-	// side in the right triangle and polygons is an array of points. All values
-	// are squares except t which is a triangle and will always have a length of
-	// null. The output is primarily intended for translating to <g> and
-	// <polygon> tags.
+	// inner object is { type: t, length: n, coordinates: [...] }, t is the type
+	// of polygon ('Square' or 'Triangle'), n is the length of the side in the
+	// right triangle if it's a square (null otherwise), and coordinates is an
+	// array of points in the form [x, y]. The output is primarily intended for
+	// translating to <g> and <polygon> SVG tags but usable in many places.
 	//
 	// Polygon c's top left point will be (0,0) with all other positions relative
 	// to it. All polygons are in clockwise order.
@@ -148,6 +148,7 @@ export default class RightTriangle {
 		]
 
 		return {
+			type: 'RightTriangle',
 			a: this._mapToPolygonObject(this.a, a),
 			b: this._mapToPolygonObject(this.b, b),
 			c: this._mapToPolygonObject(this.c, c),
@@ -201,6 +202,7 @@ export default class RightTriangle {
 
 	_mapToPolygonObject = (len, poly) => {
 		return {
+			type: poly.length === 3 ? 'Triangle' : 'Square',
 			length: len,
 			coordinates: this._mapAndRoundPolygon(poly),
 		}

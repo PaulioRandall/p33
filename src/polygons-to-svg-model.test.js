@@ -3,6 +3,7 @@ import polygonsToSvgModel from './polygons-to-svg-model.js'
 describe('polygonsToSvgModel', () => {
 	test('creates simple polygon model', () => {
 		const polygons = {
+			type: 'RightTriangle',
 			a: {
 				coordinates: [
 					[0, 5],
@@ -46,6 +47,7 @@ describe('polygonsToSvgModel', () => {
 
 	test('creates simple polygon model', () => {
 		const polygons = {
+			type: 'RightTriangle',
 			a: {
 				coordinates: [
 					[0, 5],

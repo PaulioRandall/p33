@@ -7,10 +7,10 @@
 //
 // For instance, invoking:
 // (
-//   { ..., c: 13 },
-//   'b',
+//   { ..., c: { type: 'Square', length: 13, ... } },
+//   'c',
 //   RightTriangle{ ..., c: 5 }
 // )
 //
-// would yield: { ..., c: { c: 13, ... } }
+// would yield: { ..., c: { type: 'Polygon', ..., c: 13, ... } }
 export default (polygons, side, rightTriangle) => {}

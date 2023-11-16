@@ -96,6 +96,20 @@ describe('RightTriangle', () => {
 		})
 
 		describe('generatePolygons', () => {
+			test('has correct type', () => {
+				const rt = new RightTriangle()
+
+				const act = rt.generatePolygons()
+				const exp = [
+					[5, 5],
+					[6.8, 7.4],
+					[9.2, 5.6],
+					[7.4, 3.2],
+				]
+
+				expect(act).toHaveProperty('type', 'RightTriangle')
+			})
+
 			test('square a', () => {
 				const rt = new RightTriangle()
 
@@ -107,7 +121,11 @@ describe('RightTriangle', () => {
 					[7.4, 3.2],
 				]
 
-				expect(act).toHaveProperty('a', { length: 3, coordinates: exp })
+				expect(act).toHaveProperty('a', {
+					type: 'Square',
+					length: 3,
+					coordinates: exp,
+				})
 			})
 
 			test('square b', () => {
@@ -121,7 +139,11 @@ describe('RightTriangle', () => {
 					[8.2, -2.4],
 				]
 
-				expect(act).toHaveProperty('b', { length: 4, coordinates: exp })
+				expect(act).toHaveProperty('b', {
+					type: 'Square',
+					length: 4,
+					coordinates: exp,
+				})
 			})
 
 			test('square c', () => {
@@ -135,7 +157,11 @@ describe('RightTriangle', () => {
 					[0, 0],
 				]
 
-				expect(act).toHaveProperty('c', { length: 5, coordinates: exp })
+				expect(act).toHaveProperty('c', {
+					type: 'Square',
+					length: 5,
+					coordinates: exp,
+				})
 			})
 
 			test('Triangle', () => {
@@ -148,7 +174,11 @@ describe('RightTriangle', () => {
 					[5, 0],
 				]
 
-				expect(act).toHaveProperty('t', { length: null, coordinates: exp })
+				expect(act).toHaveProperty('t', {
+					type: 'Triangle',
+					length: null,
+					coordinates: exp,
+				})
 			})
 		})
 	})
