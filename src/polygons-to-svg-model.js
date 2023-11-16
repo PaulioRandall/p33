@@ -49,11 +49,15 @@ const polygonsToElements = (polygons) => {
 	})
 }
 
-const polygonToElement = (name, polygon) => {
+const polygonToElement = (name, poly) => {
 	return {
 		tag: 'polygon',
 		attributes: {
-			points: polygon.map((p) => `${p[0]},${p[1]}`).join(' '),
+			points: poly.coordinates
+				.map((p) => {
+					return `${p[0]},${p[1]}`
+				})
+				.join(' '),
 		},
 	}
 }

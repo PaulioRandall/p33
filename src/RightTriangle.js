@@ -118,14 +118,18 @@ export default class RightTriangle {
 	// generatePolygons returns an array of polygons representing the passed
 	// right angle triangle.
 	//
-	// The result will include the triangle and three squares. It is primarily
-	// intended for easy use with the SVG g tag.
+	// The result will be in the form { a: {}, b: {}, c: {}, t: {} } where each
+	// inner object is { length: n, polygons: [...] }, n is the length of the
+	// side in the right triangle and polygons is an array of points. All values
+	// are squares except t which is a triangle and will always have a length of
+	// null. The output is primarily intended for translating to <g> and
+	// <polygon> tags.
 	//
 	// Polygon c's top left point will be (0,0) with all other positions relative
-	// to it. The collection will start with the hypotenuse square 'c' on the
-	// left, the triangle attached to the right edge, square 'a' attached to the
-	// upper triangle edge, and square 'b' attached to the bottom triangle edge.
+	// to it. All polygons are in clockwise order.
 	generatePolygons() {
+		// TODO: Change to counter-clockwise
+
 		const c = [
 			new Victor(0, this.c), // top left
 			new Victor(this.c, this.c), // top right
@@ -144,10 +148,10 @@ export default class RightTriangle {
 		]
 
 		return {
-			a: this._mapAndRoundPolygon(a),
-			b: this._mapAndRoundPolygon(b),
-			c: this._mapAndRoundPolygon(c),
-			t: this._mapAndRoundPolygon(t),
+			a: this._mapToPolygonObject(this.a, a),
+			b: this._mapToPolygonObject(this.b, b),
+			c: this._mapToPolygonObject(this.c, c),
+			t: this._mapToPolygonObject(null, t),
 		}
 	}
 
@@ -195,11 +199,18 @@ export default class RightTriangle {
 		return new Victor(0, len).rotate(rotation).invertX()
 	}
 
-	_mapAndRoundPolygon = (poly, dp) => {
+	_mapToPolygonObject = (len, poly) => {
+		return {
+			length: len,
+			coordinates: this._mapAndRoundPolygon(poly),
+		}
+	}
+
+	_mapAndRoundPolygon = (poly) => {
 		return poly.map((v) => this._mapAndRoundVictor(v))
 	}
 
-	_mapAndRoundVictor = (vic, dp) => {
+	_mapAndRoundVictor = (vic) => {
 		return [this._round(vic.x), this._round(vic.y)]
 	}
 }

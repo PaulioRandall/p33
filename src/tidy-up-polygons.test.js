@@ -1,45 +1,57 @@
 import tidyUpPolygons from './tidy-up-polygons.js'
 
 describe('tidyUpPolygons', () => {
-	test('properly translates polygons', () => {
+	test('properly translates coordinates', () => {
 		const givenPolygons = {
-			a: [
-				[0, 5],
-				[5, 5],
-				[5, 0],
-				[0, 0],
-			],
-			b: [
-				[0, 0],
-				[-10, 0],
-				[-10, -10],
-				[0, -10],
-			],
-			c: [
-				[0, 0],
-				[10, 0],
-				[0, 100],
-			],
+			a: {
+				coordinates: [
+					[0, 5],
+					[5, 5],
+					[5, 0],
+					[0, 0],
+				],
+			},
+			b: {
+				coordinates: [
+					[0, 0],
+					[-10, 0],
+					[-10, -10],
+					[0, -10],
+				],
+			},
+			c: {
+				coordinates: [
+					[0, 0],
+					[10, 0],
+					[0, 100],
+				],
+			},
 		}
 
 		const expPolygons = {
-			a: [
-				[10, 15],
-				[15, 15],
-				[15, 10],
-				[10, 10],
-			],
-			b: [
-				[10, 10],
-				[0, 10],
-				[0, 0],
-				[10, 0],
-			],
-			c: [
-				[10, 10],
-				[20, 10],
-				[10, 110],
-			],
+			a: {
+				coordinates: [
+					[10, 15],
+					[15, 15],
+					[15, 10],
+					[10, 10],
+				],
+			},
+			b: {
+				coordinates: [
+					[10, 10],
+					[0, 10],
+					[0, 0],
+					[10, 0],
+				],
+			},
+			c: {
+				coordinates: [
+					[10, 10],
+					[20, 10],
+					[10, 110],
+				],
+			},
 		}
 
 		tidyUpPolygons(givenPolygons)
@@ -48,18 +60,22 @@ describe('tidyUpPolygons', () => {
 
 	test('returns expected size', () => {
 		const givenPolygons = {
-			a: [
-				[0, 5],
-				[15, 5],
-				[15, 0],
-				[0, 0],
-			],
-			b: [
-				[0, 0],
-				[-10, 0],
-				[-10, -10],
-				[0, -10],
-			],
+			a: {
+				coordinates: [
+					[0, 5],
+					[15, 5],
+					[15, 0],
+					[0, 0],
+				],
+			},
+			b: {
+				coordinates: [
+					[0, 0],
+					[-10, 0],
+					[-10, -10],
+					[0, -10],
+				],
+			},
 		}
 
 		const expSize = [25, 15]

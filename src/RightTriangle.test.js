@@ -107,7 +107,7 @@ describe('RightTriangle', () => {
 					[7.4, 3.2],
 				]
 
-				expect(act).toHaveProperty('a', exp)
+				expect(act).toHaveProperty('a', { length: 3, coordinates: exp })
 			})
 
 			test('square b', () => {
@@ -121,7 +121,7 @@ describe('RightTriangle', () => {
 					[8.2, -2.4],
 				]
 
-				expect(act).toHaveProperty('b', exp)
+				expect(act).toHaveProperty('b', { length: 4, coordinates: exp })
 			})
 
 			test('square c', () => {
@@ -135,7 +135,7 @@ describe('RightTriangle', () => {
 					[0, 0],
 				]
 
-				expect(act).toHaveProperty('c', exp)
+				expect(act).toHaveProperty('c', { length: 5, coordinates: exp })
 			})
 
 			test('Triangle', () => {
@@ -148,7 +148,7 @@ describe('RightTriangle', () => {
 					[5, 0],
 				]
 
-				expect(act).toHaveProperty('t', exp)
+				expect(act).toHaveProperty('t', { length: null, coordinates: exp })
 			})
 		})
 	})
