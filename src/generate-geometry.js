@@ -9,11 +9,23 @@ const generatePolygons = (schema) => {
 
 	addLengthC(schema)
 	
-	appendTrianglePolygon(schema)
+	const tp = trianglePolygon(schema)
+	translatePolygon(tp, schema.c, 0)
 
-	appendSquarePolygon(schema, 'a')
-	appendSquarePolygon(schema, 'b')
-	appendSquarePolygon(schema, 'c')
+	const ap = squarePolygon(schema, 'a')
+	translatePolygon(ap, schema.c, -schema.c)
+	
+	const bp = squarePolygon(schema, 'b')
+	translatePolygon(bp, schema.c, schema.c)
+
+	const cp = squarePolygon(schema, 'c')
+
+	schema.polygons = [
+		tp,
+		ap,
+		bp,
+		cp
+	]
 
 	return schema
 }
@@ -27,7 +39,7 @@ const calcHypotenuse = (a, b) => {
 	return Math.sqrt(a * a + b * b)
 }
 
-// appendTrianglePolygons calculates the polygons points for a triangle
+// trianglePolygon calculates the polygons points for a triangle
 // starting at (0,0) moving anti-clockwise.
 //
 // The result  will be in the form:
@@ -39,21 +51,21 @@ const calcHypotenuse = (a, b) => {
 //     { x: 0, y: c, angle: RIGHT_ANGLE - angleOppositeA },
 //   ],
 // }
-const appendTrianglePolygon = (schema) => {
+const trianglePolygon = (schema) => {
 	const angleA = Math.asin(schema.a / schema.c)
 	const midPoint = new Victor(0, schema.b).rotate(-angleA)
 
-	schema.polygons.push({
+	return {
 		shape: 'triangle',
 		points: [
 			newPoint(0, 0, angleA),
 			newPoint(midPoint.x, midPoint.y, RIGHT_ANGLE),
 			newPoint(0, schema.c, RIGHT_ANGLE - angleA),
 		],
-	})
+	}
 }
 
-// appendSquarePolygon calculates the polygons points for a square starting at
+// squarePolygon calculates the polygons points for a square starting at
 // (0,0) moving anti-clockwise.
 //
 // The result  will be in the form:
@@ -67,10 +79,10 @@ const appendTrianglePolygon = (schema) => {
 //     { x: 0,    y: side, angle: RIGHT_ANGLE },
 //   ],
 // }
-const appendSquarePolygon = (schema, side) => {
+const squarePolygon = (schema, side) => {
 	const len = schema[side]
 
-	schema.polygons.push({
+	return {
 		side: side,
 		shape: 'square',
 		points: [
@@ -79,7 +91,14 @@ const appendSquarePolygon = (schema, side) => {
 			newPoint(len, len, RIGHT_ANGLE),
 			newPoint(0, len, RIGHT_ANGLE),
 		],
-	})
+	}
+}
+
+const translatePolygon = (polygon, x, y) => {
+	for (const point of polygon.points) {
+		point.x += x
+		point.y += y
+	}
 }
 
 const newPoint = (x, y, angle) => ({ x, y, angle })
