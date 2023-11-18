@@ -25,34 +25,34 @@ describe('generatePolygons', () => {
 				},
 				{
 					side: 'a',
-					shape: "square",
+					shape: 'square',
 					points: [
-						{ x: 5, y: -5, angle: RIGHT_ANGLE },
-						{ x: 8, y: -5, angle: RIGHT_ANGLE },
-						{ x: 8, y: -2, angle: RIGHT_ANGLE },
-						{ x: 5, y: -2, angle: RIGHT_ANGLE },
-					]
+						{ x: 5, y: 5, angle: RIGHT_ANGLE },
+						{ x: 7.4, y: 3.2, angle: RIGHT_ANGLE },
+						{ x: 9.2, y: 5.6, angle: RIGHT_ANGLE },
+						{ x: 6.8, y: 7.4, angle: RIGHT_ANGLE },
+					],
 				},
 				{
 					side: 'b',
-					shape: "square",
+					shape: 'square',
 					points: [
-						{ x: 5, y: 5, angle: RIGHT_ANGLE },
-						{ x: 9, y: 5, angle: RIGHT_ANGLE },
-						{ x: 9, y: 9, angle: RIGHT_ANGLE },
-						{ x: 5, y: 9, angle: RIGHT_ANGLE },
-					]
+						{ x: 8.2, y: -2.4, angle: RIGHT_ANGLE },
+						{ x: 10.6, y: 0.8, angle: RIGHT_ANGLE },
+						{ x: 7.4, y: 3.2, angle: RIGHT_ANGLE },
+						{ x: 5, y: 0, angle: RIGHT_ANGLE },
+					],
 				},
 				{
 					side: 'c',
-					shape: "square",
+					shape: 'square',
 					points: [
 						{ x: 0, y: 0, angle: RIGHT_ANGLE },
 						{ x: 5, y: 0, angle: RIGHT_ANGLE },
 						{ x: 5, y: 5, angle: RIGHT_ANGLE },
 						{ x: 0, y: 5, angle: RIGHT_ANGLE },
-					]
-				}				
+					],
+				},
 			],
 		}
 

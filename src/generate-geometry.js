@@ -8,24 +8,22 @@ const generatePolygons = (schema) => {
 	schema.polygons = []
 
 	addLengthC(schema)
-	
+	const angleA = findAngleA(schema)
+
 	const tp = trianglePolygon(schema)
 	translatePolygon(tp, schema.c, 0)
 
 	const ap = squarePolygon(schema, 'a')
-	translatePolygon(ap, schema.c, -schema.c)
-	
+	translatePolygon(ap, schema.c, schema.c)
+	rotatePolygon(ap, ap.points[0], angleA)
+
 	const bp = squarePolygon(schema, 'b')
-	translatePolygon(bp, schema.c, schema.c)
+	translatePolygon(bp, schema.c, -schema.b)
+	rotatePolygon(bp, bp.points[3], angleA - RIGHT_ANGLE)
 
 	const cp = squarePolygon(schema, 'c')
 
-	schema.polygons = [
-		tp,
-		ap,
-		bp,
-		cp
-	]
+	schema.polygons = [tp, ap, bp, cp]
 
 	return schema
 }
@@ -39,20 +37,14 @@ const calcHypotenuse = (a, b) => {
 	return Math.sqrt(a * a + b * b)
 }
 
+const findAngleA = (schema) => {
+	return Math.asin(schema.a / schema.c)
+}
+
 // trianglePolygon calculates the polygons points for a triangle
 // starting at (0,0) moving anti-clockwise.
-//
-// The result  will be in the form:
-// {
-//   shape: 'triangle',
-//   points: [
-//     { x: 0, y: 0, angle: angleOppositeA },
-//     { x: ?, y: ?, angle: RIGHT_ANGLE },
-//     { x: 0, y: c, angle: RIGHT_ANGLE - angleOppositeA },
-//   ],
-// }
 const trianglePolygon = (schema) => {
-	const angleA = Math.asin(schema.a / schema.c)
+	const angleA = findAngleA(schema)
 	const midPoint = new Victor(0, schema.b).rotate(-angleA)
 
 	return {
@@ -67,18 +59,6 @@ const trianglePolygon = (schema) => {
 
 // squarePolygon calculates the polygons points for a square starting at
 // (0,0) moving anti-clockwise.
-//
-// The result  will be in the form:
-// {
-//   side: 'a',
-//   shape: 'square',
-//   points: [
-//     { x: 0,    y: 0,    angle: RIGHT_ANGLE },
-//     { x: side, y: 0,    angle: RIGHT_ANGLE },
-//     { x: side, y: side, angle: RIGHT_ANGLE },
-//     { x: 0,    y: side, angle: RIGHT_ANGLE },
-//   ],
-// }
 const squarePolygon = (schema, side) => {
 	const len = schema[side]
 
@@ -101,16 +81,22 @@ const translatePolygon = (polygon, x, y) => {
 	}
 }
 
+const rotatePolygon = (polygon, origin, amount) => {
+	for (const point of polygon.points) {
+		const v = new Victor(point.x - origin.x, point.y - origin.y)
+		v.rotate(-amount)
+
+		// Rounding because fails test due to miniscule JS float rounding.
+		point.x = round(v.x + origin.x, 9)
+		point.y = round(v.y + origin.y, 9)
+	}
+}
+
 const newPoint = (x, y, angle) => ({ x, y, angle })
 
 const round = (n, dp) => {
 	const dpMod = Math.pow(10, dp)
 	return Math.round(n * dpMod) / dpMod
-}
-
-const sqrtRound = (n, dp) => {
-	n = Math.sqrt(n)
-	return round(n, dp)
 }
 
 export default generatePolygons
