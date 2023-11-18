@@ -1,7 +1,7 @@
 import tidyUpPolygons from './tidy-up-polygons.js'
 
-// polygons-to-svg-model accepts a set of polygons and returns a model object
-// for constructing an SVG.
+// polygons-to-svg-model accepts a polygon set and returns a model for
+// constructing an SVG.
 //
 // This intermediate step is a precursor to the generateSvg function that
 // actually creates an SVG from JavaScript Elements.
