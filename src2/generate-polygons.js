@@ -1,5 +1,7 @@
 import Victor from 'victor'
 
+const nintyDegreesAsRadians = (Math.PI / 180) * 90
+
 // generatePolygons
 export default (schema) => {
 	schema = structuredClone(schema)
@@ -42,11 +44,10 @@ export default (schema) => {
 			polygons: [
 				{
 					shape: 'triangle',
-					angle: 0.6435011087932844,
 					points: [
-						[0, 0],
-						[2.4, 3.2],
-						[0, 5],
+						{ x: 0, y: 0, rads: 0.6435011087932844 },
+						{ x: 2.4, y: 3.2, rads: nintyDegreesAsRadians },
+						{ x: 0, y: 5, rads: (nintyDegreesAsRadians) - 0.6435011087932844 },
 					],
 				},
 			]
@@ -83,10 +84,15 @@ const appendTrianglePolygon = (schema) => {
 
 	schema.polygons.push({
 		shape: 'triangle',
-		angle: rotation,
-		points: [[0, 0], midPoint.toArray(), [0, schema.c]],
+		points: [
+			newPoint(0, 0, rotation),
+			newPoint(midPoint.x, midPoint.y, nintyDegreesAsRadians),
+			newPoint(0, schema.c, nintyDegreesAsRadians - rotation),
+		],
 	})
 }
+
+const newPoint = (x, y, rads) => ({ x, y, rads })
 
 const round = (n, dp) => {
 	const dpMod = Math.pow(10, dp)

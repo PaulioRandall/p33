@@ -1,5 +1,7 @@
 import generatePolygons from './generate-polygons.js'
 
+const nintyDegreesAsRadians = (Math.PI / 180) * 90
+
 describe('generatePolygons', () => {
 	test('generates simple polygon', () => {
 		const given = {
@@ -15,11 +17,10 @@ describe('generatePolygons', () => {
 			polygons: [
 				{
 					shape: 'triangle',
-					angle: 0.6435011087932844,
 					points: [
-						[0, 0],
-						[2.4, 3.2],
-						[0, 5],
+						{ x: 0, y: 0, rads: 0.6435011087932844 },
+						{ x: 2.4, y: 3.2, rads: nintyDegreesAsRadians },
+						{ x: 0, y: 5, rads: nintyDegreesAsRadians - 0.6435011087932844 },
 					],
 				},
 			],
