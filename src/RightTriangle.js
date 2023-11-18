@@ -137,7 +137,7 @@ export default class RightTriangle {
 			new Victor(0, 0), // bot left
 		]
 
-		const rotation = Math.asin(this.a / this.c)
+		const rotation = this._round(Math.asin(this.a / this.c), 3)
 		const a = this._rotatedSquare(c[1], this.a, rotation)
 		const b = this._rotatedSquare(c[2], this.b, rotation)
 
@@ -149,10 +149,10 @@ export default class RightTriangle {
 
 		return {
 			type: 'RightTriangle',
-			a: this._mapToPolygonObject(this.a, a),
-			b: this._mapToPolygonObject(this.b, b),
-			c: this._mapToPolygonObject(this.c, c),
-			t: this._mapToPolygonObject(null, t),
+			a: this._mapToPolygonObject(a, this.a, -rotation),
+			b: this._mapToPolygonObject(b, this.b, rotation),
+			c: this._mapToPolygonObject(c, this.c, 0),
+			t: this._mapToPolygonObject(t),
 		}
 	}
 
@@ -171,8 +171,8 @@ export default class RightTriangle {
 		this.c = this._sqrtRound(this.cs)
 	}
 
-	_round(n) {
-		const dpMod = Math.pow(10, this._precision)
+	_round(n, dp = this._precision) {
+		const dpMod = Math.pow(10, dp)
 		return Math.round(n * dpMod) / dpMod
 	}
 
@@ -200,10 +200,11 @@ export default class RightTriangle {
 		return new Victor(0, len).rotate(rotation).invertX()
 	}
 
-	_mapToPolygonObject = (len, poly) => {
+	_mapToPolygonObject = (poly, len = null, rotation = null) => {
 		return {
 			type: poly.length === 3 ? 'Triangle' : 'Square',
 			length: len,
+			rotation: rotation,
 			coordinates: this._mapAndRoundPolygon(poly),
 		}
 	}

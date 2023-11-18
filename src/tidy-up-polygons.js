@@ -1,6 +1,11 @@
 // tidy-up-polygons translates all polygons so that the left most and top most
 // point of the entire set becomes zero. The width and height are returned.
 export default (polygons) => {
+	// TODO
+	// Add support for sub polygons
+	// This will involve rotating the sub polygon
+	// + need to update the rotation value for multiple nested RightTriangles
+
 	const bounds = findBounds(polygons)
 
 	if (bounds.left || bounds.top) {

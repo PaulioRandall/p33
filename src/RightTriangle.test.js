@@ -105,6 +105,7 @@ describe('RightTriangle', () => {
 					a: {
 						type: 'Square',
 						length: 3,
+						rotation: -0.644,
 						coordinates: [
 							[5, 5],
 							[6.8, 7.4],
@@ -115,6 +116,7 @@ describe('RightTriangle', () => {
 					b: {
 						type: 'Square',
 						length: 4,
+						rotation: 0.644,
 						coordinates: [
 							[5, 0],
 							[7.4, 3.2],
@@ -125,6 +127,7 @@ describe('RightTriangle', () => {
 					c: {
 						type: 'Square',
 						length: 5,
+						rotation: 0,
 						coordinates: [
 							[0, 5],
 							[5, 5],
@@ -135,6 +138,7 @@ describe('RightTriangle', () => {
 					t: {
 						type: 'Triangle',
 						length: null,
+						rotation: null,
 						coordinates: [
 							[5, 5],
 							[7.4, 3.2],
