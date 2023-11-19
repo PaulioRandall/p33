@@ -8,22 +8,29 @@ const RIGHT_ANGLE = (Math.PI / 180) * 90
 const generatePolygons = (schema) => {
 	schema = structuredClone(schema)
 
-	addLengthC(schema)
-	const angleA = findAngleA(schema)
-	const angleB = angleA - RIGHT_ANGLE
+	applyLengthCToSchema(schema)
 
-	const tp = trianglePolygon(schema)
-	translatePolygon(tp, schema.c, 0)
+	// Lowercase for sides
+	const a = getLength(schema.a)
+	const b = getLength(schema.b)
+	const c = schema.c
 
-	const ap = squarePolygon(schema, 'a')
-	translatePolygon(ap, schema.c, schema.c)
-	rotatePolygon(ap, ap.points[0], angleA)
+	// Uppercase for angles in radians
+	const A = findAngleA(a, c)
+	const B = A - RIGHT_ANGLE
 
-	const bp = squarePolygon(schema, 'b')
-	translatePolygon(bp, schema.c, -schema.b)
-	rotatePolygon(bp, bp.points[3], angleB)
+	const tp = trianglePolygon(a, b, c, A)
+	translatePolygon(tp, c, 0)
 
-	const cp = squarePolygon(schema, 'c')
+	const ap = squarePolygon(a, 'a')
+	translatePolygon(ap, c, c)
+	rotatePolygon(ap, ap.points[0], A)
+
+	const bp = squarePolygon(b, 'b')
+	translatePolygon(bp, c, -b)
+	rotatePolygon(bp, bp.points[3], B)
+
+	const cp = squarePolygon(c, 'c')
 
 	schema.polygons = [tp, ap, bp, cp]
 
@@ -37,40 +44,49 @@ const generatePolygons = (schema) => {
 	return schema
 }
 
-// addLengthC calculates c (hypotenuse) for the schema and each sub-schema.
-const addLengthC = (schema) => {
+// applyLengthCToSchema calculates c (hypotenuse) for the schema and each
+// sub-schema.
+const applyLengthCToSchema = (schema) => {
 	schema.c = calcHypotenuse(schema.a, schema.b)
 }
 
 const calcHypotenuse = (a, b) => {
+	a = getLength(a)
+	b = getLength(b)
 	return Math.sqrt(a * a + b * b)
 }
 
-const findAngleA = (schema) => {
-	return Math.asin(schema.a / schema.c)
+const getLength = (schema) => {
+	if (typeof schema === 'number') {
+		return schema
+	}
+
+	applyLengthCToSchema(schema)
+	return schema.c
+}
+
+const findAngleA = (a, c) => {
+	return Math.asin(a / c)
 }
 
 // trianglePolygon calculates the polygons points for a triangle
 // starting at (0,0) moving anti-clockwise.
-const trianglePolygon = (schema) => {
-	const angleA = findAngleA(schema)
-	const midPoint = new Victor(0, schema.b).rotate(-angleA)
+const trianglePolygon = (a, b, c, A) => {
+	const midPoint = new Victor(0, b).rotate(-A)
 
 	return {
 		shape: 'triangle',
 		points: [
-			newPoint(0, 0, angleA),
+			newPoint(0, 0, A),
 			newPoint(midPoint.x, midPoint.y, RIGHT_ANGLE),
-			newPoint(0, schema.c, RIGHT_ANGLE - angleA),
+			newPoint(0, c, RIGHT_ANGLE - A),
 		],
 	}
 }
 
 // squarePolygon calculates the polygons points for a square starting at
 // (0,0) moving anti-clockwise.
-const squarePolygon = (schema, side) => {
-	const len = schema[side]
-
+const squarePolygon = (len, side) => {
 	return {
 		side: side,
 		shape: 'square',
