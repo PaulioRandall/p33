@@ -4,7 +4,7 @@
 	"description": "A simple library for generating interactive visuals of Pythagorean Triangles. Made to be plundered.",
 	"type": "module",
 	"license": "MIT",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"keywords": [
 		"visualisation",
 		"geometry",
@@ -15,7 +15,7 @@
 		".": "./src/index.js"
 	},
 	"engines": {
-		"node": "18.18.2"
+		"node": ">=18.18.2"
 	},
 	"repository": {
 		"type": "git",
