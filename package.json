@@ -7,7 +7,7 @@
 	"version": "0.3.0",
 	"keywords": [
 		"visualisation",
-		"diagram",
+		"geometry",
 		"svg",
 		"pythagorean-triples"
 	],
@@ -32,6 +32,6 @@
 		"prettier": "3.0.3"
 	},
 	"dependencies": {
-		"victor": "1.1.0"
+		"victor": "^1.1.0"
 	}
 }
