@@ -5,8 +5,18 @@ const RIGHT_ANGLE = (Math.PI / 180) * 90
 // generatePolygons returns an extension of the input object containing the
 // points for one triangle, representing the right angle triangle, and points
 // for three square polygons, representing the squared sides of that triangle.
-const generatePolygons = (schema) => {
+const generatePolygons = (schema, root = true) => {
 	schema = structuredClone(schema)
+
+	let ap = null
+	if (typeof schema.a === 'object') {
+		ap = generatePolygons(schema.a, false)
+	}
+
+	let bp = null
+	if (typeof schema.b === 'object') {
+		bp = generatePolygons(schema.b, false)
+	}
 
 	applyLengthCToSchema(schema)
 
@@ -20,26 +30,44 @@ const generatePolygons = (schema) => {
 	const B = A - RIGHT_ANGLE
 
 	const tp = trianglePolygon(a, b, c, A)
-	translatePolygon(tp, c, 0)
+	translatePolygonBy(tp, c, 0)
 
-	const ap = squarePolygon(a, 'a')
-	translatePolygon(ap, c, c)
-	rotatePolygon(ap, ap.points[0], A)
+	if (ap) {
+		rotateSchemaBy(ap, -RIGHT_ANGLE)
+		translateSchemaBy(ap, c + a, c - a)
+		changeSchemaOriginPoint(ap, 2)
+		rotateSchemaBy(ap, A)
+		removeSquarePolygon(ap, 'c')
+	} else {
+		ap = squarePolygon(a, 'a')
+		translatePolygonBy(ap, c, c)
+		rotatePointsBy(ap.points, ap.points[0], A)
+	}
 
-	const bp = squarePolygon(b, 'b')
-	translatePolygon(bp, c, -b)
-	rotatePolygon(bp, bp.points[3], B)
+	if (bp) {
+		translateSchemaBy(bp, c - b, 0)
+		changeSchemaOriginPoint(bp, 1)
+		rotateSchemaBy(bp, A)
+		removeSquarePolygon(bp, 'c')
+	} else {
+		bp = squarePolygon(b, 'b')
+		translatePolygonBy(bp, c, -b)
+		rotatePointsBy(bp.points, bp.points[3], B)
+	}
 
 	const cp = squarePolygon(c, 'c')
 
-	schema.polygons = [tp, ap, bp, cp]
+	schema.polygons = [tp, cp, bp, ap]
+	schema.origin = { x: 0, y: 0 }
 
-	const bounds = findBounds(schema.polygons)
-	translatePolygons(schema.polygons, -bounds.left, -bounds.top)
+	if (root) {
+		const bounds = findBounds(schema.polygons)
+		translateSchemaBy(schema, -bounds.left, -bounds.top)
 
-	const size = calcSize(bounds)
-	schema.width = size.width
-	schema.height = size.height
+		const size = calcSize(bounds)
+		schema.width = size.width
+		schema.height = size.height
+	}
 
 	return schema
 }
@@ -99,21 +127,69 @@ const squarePolygon = (len, side) => {
 	}
 }
 
-const translatePolygons = (polygons, x, y) => {
-	for (const poly of polygons) {
-		translatePolygon(poly, x, y)
+const changeSchemaOriginPoint = (schema, index) => {
+	const newPoint = getPolygonBasePoints(schema.polygons)[index]
+	schema.origin = {
+		x: newPoint.x,
+		y: newPoint.y,
 	}
 }
 
-const translatePolygon = (poly, x, y) => {
+const getPolygonBasePoints = (polygons) => {
+	const cp = polygons.find((poly) => poly.side === 'c')
+
+	if (cp.polygons) {
+		return getPolygonBasePoints(cp.polygons)
+	}
+
+	return cp.points
+}
+
+const translateSchemaBy = (schema, x, y) => {
+	schema.origin.x += x
+	schema.origin.y += y
+	translatePolygonsBy(schema.polygons, x, y)
+}
+
+const translatePolygonsBy = (polygons, x, y) => {
+	for (const poly of polygons) {
+		translatePolygonBy(poly, x, y)
+	}
+}
+
+const translatePolygonBy = (poly, x, y) => {
+	if (poly.polygons) {
+		translateSchemaBy(poly, x, y)
+		return
+	}
+
 	for (const point of poly.points) {
 		point.x += x
 		point.y += y
 	}
 }
 
-const rotatePolygon = (poly, origin, amount) => {
-	for (const point of poly.points) {
+const rotateSchemaBy = (schema, amount) => {
+	rotatePolygonsBy(schema.polygons, schema.origin, amount)
+}
+
+const rotatePolygonsBy = (polygons, origin, amount) => {
+	for (const poly of polygons) {
+		rotatePolygonBy(poly, origin, amount)
+	}
+}
+
+const rotatePolygonBy = (poly, origin, amount) => {
+	if (poly.polygons) {
+		rotatePolygonsBy(poly.polygons, origin, amount)
+		return
+	}
+
+	rotatePointsBy(poly.points, origin, amount)
+}
+
+const rotatePointsBy = (points, origin, amount) => {
+	for (const point of points) {
 		const v = new Victor(point.x - origin.x, point.y - origin.y)
 		v.rotate(-amount)
 
@@ -121,6 +197,11 @@ const rotatePolygon = (poly, origin, amount) => {
 		point.x = round(v.x + origin.x, 9)
 		point.y = round(v.y + origin.y, 9)
 	}
+}
+
+const removeSquarePolygon = (schema, side) => {
+	const i = schema.polygons.findIndex((poly) => poly.side === 'c')
+	schema.polygons.splice(i, 1)
 }
 
 const newPoint = (x, y, angle) => ({ x, y, angle })
@@ -144,6 +225,11 @@ const findBounds = (polygons) => {
 
 const updateBoundsFromPolygons = (polygons, bounds) => {
 	for (const poly of polygons) {
+		if (poly.polygons) {
+			updateBoundsFromPolygons(poly.polygons, bounds)
+			continue
+		}
+
 		for (const point of poly.points) {
 			updateBoundsFromPoint(point, bounds)
 		}

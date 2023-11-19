@@ -16,6 +16,10 @@ describe('generatePolygons', () => {
 			c: 5,
 			width: 10.6,
 			height: 9.8,
+			origin: {
+				x: 0,
+				y: 2.4,
+			},
 			polygons: [
 				{
 					shape: 'triangle',
@@ -26,13 +30,13 @@ describe('generatePolygons', () => {
 					],
 				},
 				{
-					side: 'a',
+					side: 'c',
 					shape: 'square',
 					points: [
+						{ x: 0, y: 2.4, angle: RIGHT_ANGLE },
+						{ x: 5, y: 2.4, angle: RIGHT_ANGLE },
 						{ x: 5, y: 7.4, angle: RIGHT_ANGLE },
-						{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
-						{ x: 9.2, y: 8, angle: RIGHT_ANGLE },
-						{ x: 6.8, y: 9.8, angle: RIGHT_ANGLE },
+						{ x: 0, y: 7.4, angle: RIGHT_ANGLE },
 					],
 				},
 				{
@@ -46,13 +50,13 @@ describe('generatePolygons', () => {
 					],
 				},
 				{
-					side: 'c',
+					side: 'a',
 					shape: 'square',
 					points: [
-						{ x: 0, y: 2.4, angle: RIGHT_ANGLE },
-						{ x: 5, y: 2.4, angle: RIGHT_ANGLE },
 						{ x: 5, y: 7.4, angle: RIGHT_ANGLE },
-						{ x: 0, y: 7.4, angle: RIGHT_ANGLE },
+						{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
+						{ x: 9.2, y: 8, angle: RIGHT_ANGLE },
+						{ x: 6.8, y: 9.8, angle: RIGHT_ANGLE },
 					],
 				},
 			],
