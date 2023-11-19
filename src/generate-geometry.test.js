@@ -111,7 +111,9 @@ describe('generatePolygons', () => {
 		}
 
 		const act = generateGeometry(given)
-		expect(fixAllObjectNumbers(act)).toEqual(fixAllObjectNumbers(exp))
+		fixAllObjectNumbers(act)
+		fixAllObjectNumbers(exp)
+		expect(act).toEqual(exp)
 	})
 
 	test('generates nested polygon', () => {
@@ -119,6 +121,7 @@ describe('generatePolygons', () => {
 			a: {
 				a: 3,
 				b: 4,
+				// c: 5
 			},
 			b: 12,
 			// c: 13
@@ -128,88 +131,94 @@ describe('generatePolygons', () => {
 			a: {
 				a: 3,
 				b: 4,
+				c: 5,
 			},
 			b: 12,
 			c: 13,
-			width: 10.6,
-			height: 9.8,
+			width: 28.6923077,
+			height: 21.7230769,
+			origin: {
+				x: 0,
+				y: 4.6153846,
+			},
 			polygons: [
 				{
 					shape: 'triangle',
 					points: [
-						{ x: 5, y: 2.4, angle: 0.6435011087932844 },
-						{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
-						{ x: 5, y: 7.4, angle: RIGHT_ANGLE - 0.6435011087932844 },
-					],
-				},
-				{
-					side: 'a',
-					shape: 'square',
-					polygons: [
-						{
-							shape: 'triangle',
-							points: [
-								{ x: 5, y: 2.4, angle: 0.6435011087932844 },
-								{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
-								{ x: 5, y: 7.4, angle: RIGHT_ANGLE - 0.6435011087932844 },
-							],
-						},
-						{
-							side: 'a',
-							shape: 'square',
-							points: [
-								{ x: 5, y: 7.4, angle: RIGHT_ANGLE },
-								{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
-								{ x: 9.2, y: 8, angle: RIGHT_ANGLE },
-								{ x: 6.8, y: 9.8, angle: RIGHT_ANGLE },
-							],
-						},
-						{
-							side: 'b',
-							shape: 'square',
-							points: [
-								{ x: 8.2, y: 0, angle: RIGHT_ANGLE },
-								{ x: 10.6, y: 3.2, angle: RIGHT_ANGLE },
-								{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
-								{ x: 5, y: 2.4, angle: RIGHT_ANGLE },
-							],
-						},
-						{
-							side: 'c',
-							shape: 'square',
-							points: [
-								{ x: 0, y: 2.4, angle: RIGHT_ANGLE },
-								{ x: 5, y: 2.4, angle: RIGHT_ANGLE },
-								{ x: 5, y: 7.4, angle: RIGHT_ANGLE },
-								{ x: 0, y: 7.4, angle: RIGHT_ANGLE },
-							],
-						},
-					],
-				},
-				{
-					side: 'b',
-					shape: 'square',
-					points: [
-						{ x: 8.2, y: 0, angle: RIGHT_ANGLE },
-						{ x: 10.6, y: 3.2, angle: RIGHT_ANGLE },
-						{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
-						{ x: 5, y: 2.4, angle: RIGHT_ANGLE },
+						{ x: 13, y: 4.6153846, angle: 0.3947911 },
+						{ x: 17.6153846, y: 15.6923077, angle: RIGHT_ANGLE },
+						{ x: 13, y: 17.6153846, angle: 1.1760052 },
 					],
 				},
 				{
 					side: 'c',
 					shape: 'square',
 					points: [
-						{ x: 0, y: 2.4, angle: RIGHT_ANGLE },
-						{ x: 5, y: 2.4, angle: RIGHT_ANGLE },
-						{ x: 5, y: 7.4, angle: RIGHT_ANGLE },
-						{ x: 0, y: 7.4, angle: RIGHT_ANGLE },
+						{ x: 0, y: 4.6153846, angle: RIGHT_ANGLE },
+						{ x: 13, y: 4.6153846, angle: RIGHT_ANGLE },
+						{ x: 13, y: 17.6153846, angle: RIGHT_ANGLE },
+						{ x: 0, y: 17.6153846, angle: 1.5707963 },
+					],
+				},
+				{
+					side: 'b',
+					shape: 'square',
+					points: [
+						{ x: 24.0769231, y: 0, angle: RIGHT_ANGLE },
+						{ x: 28.6923077, y: 11.0769231, angle: RIGHT_ANGLE },
+						{ x: 17.6153846, y: 15.6923077, angle: RIGHT_ANGLE },
+						{ x: 13, y: 4.6153846, angle: RIGHT_ANGLE },
+					],
+				},
+				{
+					a: 3,
+					b: 4,
+					c: 5,
+					origin: {
+						x: 13,
+						y: 17.6153846,
+					},
+					polygons: [
+						{
+							shape: 'triangle',
+							points: [
+								{ x: 17.6153846, y: 15.6923077, angle: 0.6435011087932844 },
+								{ x: 15.5846154, y: 19.1384615, angle: RIGHT_ANGLE },
+								{
+									x: 13,
+									y: 17.6153846,
+									angle: RIGHT_ANGLE - 0.6435011087932844,
+								},
+							],
+						},
+						{
+							side: 'b',
+							shape: 'square',
+							points: [
+								{ x: 21.0615385, y: 17.7230769, angle: RIGHT_ANGLE },
+								{ x: 19.0307692, y: 21.1692308, angle: RIGHT_ANGLE },
+								{ x: 15.5846154, y: 19.1384615, angle: RIGHT_ANGLE },
+								{ x: 17.6153846, y: 15.6923077, angle: RIGHT_ANGLE },
+							],
+						},
+						{
+							side: 'a',
+							shape: 'square',
+							points: [
+								{ x: 13, y: 17.6153846, angle: RIGHT_ANGLE },
+								{ x: 15.5846154, y: 19.1384615, angle: RIGHT_ANGLE },
+								{ x: 14.0615385, y: 21.7230769, angle: RIGHT_ANGLE },
+								{ x: 11.4769231, y: 20.2, angle: RIGHT_ANGLE },
+							],
+						},
 					],
 				},
 			],
 		}
 
 		const act = generateGeometry(given)
-		expect(fixAllObjectNumbers(act)).toEqual(fixAllObjectNumbers(exp))
+		fixAllObjectNumbers(act)
+		fixAllObjectNumbers(exp)
+		expect(act).toEqual(exp)
 	})
 })
