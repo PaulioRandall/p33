@@ -194,8 +194,8 @@ const rotatePointsBy = (points, origin, amount) => {
 		v.rotate(-amount)
 
 		// Rounding because fails test due to miniscule JS float rounding.
-		point.x = round(v.x + origin.x, 9)
-		point.y = round(v.y + origin.y, 9)
+		;(point.x = v.x + origin.x), 9
+		;(point.y = v.y + origin.y), 9
 	}
 }
 
@@ -205,11 +205,6 @@ const removeSquarePolygon = (schema, side) => {
 }
 
 const newPoint = (x, y, angle) => ({ x, y, angle })
-
-const round = (n, dp) => {
-	const dpMod = Math.pow(10, dp)
-	return Math.round(n * dpMod) / dpMod
-}
 
 const findBounds = (polygons) => {
 	const bounds = {
