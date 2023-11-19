@@ -47,6 +47,8 @@ Above is a schema with a nested right triangle. To be precise, it represents the
 
 A geometry `object` containing details for plotting the right triangle on a diagram. The coordinate system has its origin in the bottom left so plotting straight into an SVG or HTML Canvas would render a vertically mirrored image (web language coordinate systems typically have their origin in the top left).
 
+Below is the output of the simple right triangle (3, 4, 5) followed by a rendered graphic.
+
 ```js
 const geometry = {
 	a: 3,
@@ -97,9 +99,11 @@ const geometry = {
 }
 ```
 
-Above is the output of the simple right triangle (3, 4, 5).
-
 ![Diagram of a right triangle](right-triangle.png)
+
+Below is an example of a nested geometry. The numbers within are limited to seven decimal places but was applied after generation as `generateGeometry` performs no explicit rounding.
+
+Notice the nested polygon with `side: 'c'` has been omitted since it should not be rendered. There is no limit to the amount of nesting but anymore than three levels causes visual overlap.
 
 ```js
 {
@@ -156,17 +160,17 @@ Above is the output of the simple right triangle (3, 4, 5).
 }
 ```
 
-Above is an example of a nested geometry with numbers limited to seven decimal places. This was applied after generation as `generateGeometry` performs no explicit rounding.
+Here's a graphic with two levels of nesting. If this looks familiar then you may have once read _Noise: A Flaw in Human Judgement_ by Daniel Kahneman, Olivier Sibony, and Cass Sunstein.
 
-Notice that `side: 'c'` has been omitted since it should not be rendered. There is no limit to the amount of nesting but anymore than three levels causes visual overlap.
-
-![Diagram of a right triangle](right-triangle-nested.png)
+![Diagram of a Pythagorean Triangle with another attached to one sides and a third attached to that.](right-triangle-nested.png)
 
 ### `geometryToSvg`
 
 `geometryToSvg` converts geometry generated via `generateGeometry` and creates a hierarchy of SVG HTML elements. Render the elements in a web page to visualise.
 
 Only basic styling is applied so you'll need to descend the element tree, setting your own styles, if you want something pretty.
+
+Alternatively, you can render the polygons manually using a canvas or web framework. I have a Svelte component that renders the geometry so I can interact with it.
 
 #### Arguments
 
