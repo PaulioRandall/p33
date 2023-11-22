@@ -183,7 +183,7 @@ const geometry = generateGeometry({
 
 Here's a graphic with two levels of nesting. If this looks familiar then you may have once read _Noise: A Flaw in Human Judgement_ by Daniel Kahneman, Olivier Sibony, and Cass Sunstein.
 
-This was my motivation for creating this library. I wanted to create an interactive graphic that allowed the user to adjust each square and see the effect on other squares. The biggest square is to represent mean squared error (C1) while the other squares represent bias (B1) and a breakdown of the various types of noise (A).
+This was my motivation for creating this library. I wanted to create an interactive graphic that allowed the user to adjust each square and see the effect on other squares. The biggest square is to represent mean squared error (c1) while the other squares represent bias (b1) and a breakdown of the various types of noise in judgement (a1, a2, a3, b3).
 
 ```js
 const geometry = generateGeometry({
