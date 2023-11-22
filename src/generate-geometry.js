@@ -11,11 +11,13 @@ const generatePolygons = (schema, root = true) => {
 	let ap = null
 	if (typeof schema.a === 'object') {
 		ap = generatePolygons(schema.a, false)
+		ap.side = 'a'
 	}
 
 	let bp = null
 	if (typeof schema.b === 'object') {
 		bp = generatePolygons(schema.b, false)
+		bp.side = 'b'
 	}
 
 	applyLengthCToSchema(schema)
@@ -57,6 +59,7 @@ const generatePolygons = (schema, root = true) => {
 
 	const cp = squarePolygon(c, 'c')
 
+	schema.shape = 'right-triangle'
 	schema.polygons = [tp, cp, bp, ap]
 	schema.origin = { x: 0, y: 0 }
 
@@ -104,6 +107,7 @@ const trianglePolygon = (a, b, c, A) => {
 
 	return {
 		shape: 'triangle',
+		side: 't',
 		points: [
 			newPoint(0, 0, A),
 			newPoint(midPoint.x, midPoint.y, RIGHT_ANGLE),
@@ -116,8 +120,8 @@ const trianglePolygon = (a, b, c, A) => {
 // (0,0) moving anti-clockwise.
 const squarePolygon = (len, side) => {
 	return {
-		side: side,
 		shape: 'square',
+		side: side,
 		points: [
 			newPoint(0, 0, RIGHT_ANGLE),
 			newPoint(len, 0, RIGHT_ANGLE),
