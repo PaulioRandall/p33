@@ -1,10 +1,10 @@
 {
 	"author": "Paul Williams",
 	"name": "p33",
-	"description": "A simple library for generating interactive visuals of Pythagorean Triangles. Made to be plundered.",
+	"description": "A simple library for generating coordinates of Pythagorean Triangles that are intended for visualisation. Made to be plundered.",
 	"type": "module",
 	"license": "MIT",
-	"version": "0.4.1",
+	"version": "0.5.0",
 	"keywords": [
 		"visualisation",
 		"geometry",
@@ -29,7 +29,7 @@
 	},
 	"devDependencies": {
 		"jest": "^29.7.0",
-		"prettier": "^3.0.3"
+		"prettier": "^3.1.0"
 	},
 	"dependencies": {
 		"victor": "^1.1.0"
