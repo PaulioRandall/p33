@@ -57,6 +57,7 @@ const geometry = generateGeometry({
 ```js
 // console.log(JSON.stringify(geometry, null, 2))
 {
+	shape: 'right-triangle',
 	a: 3,
 	b: 4,
 	c: 5, // Hypotenuse
@@ -65,6 +66,7 @@ const geometry = generateGeometry({
 	polygons: [
 		{
 			shape: 'triangle',
+			side: 't',
 			points: [
 				{ x: 5, y: 2.4, angle: 0.6435011087932844 },
 				{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
@@ -72,8 +74,8 @@ const geometry = generateGeometry({
 			],
 		},
 		{
-			side: 'c',
 			shape: 'square',
+			side: 'c',
 			points: [
 				{ x: 0, y: 2.4, angle: RIGHT_ANGLE },
 				{ x: 5, y: 2.4, angle: RIGHT_ANGLE },
@@ -82,8 +84,8 @@ const geometry = generateGeometry({
 			],
 		},
 		{
-			side: 'b',
 			shape: 'square',
+			side: 'b',
 			points: [
 				{ x: 8.2, y: 0, angle: RIGHT_ANGLE },
 				{ x: 10.6, y: 3.2, angle: RIGHT_ANGLE },
@@ -92,8 +94,8 @@ const geometry = generateGeometry({
 			],
 		},
 		{
-			side: 'a',
 			shape: 'square',
+			side: 'a',
 			points: [
 				{ x: 5, y: 7.4, angle: RIGHT_ANGLE },
 				{ x: 7.4, y: 5.6, angle: RIGHT_ANGLE },
@@ -126,6 +128,7 @@ const geometry = generateGeometry({
 ```js
 // console.log(JSON.stringify(geometry, null, 2))
 {
+	shape: 'right-triangle',
 	a: {
 		a: 3,
 		b: 4,
@@ -137,12 +140,15 @@ const geometry = generateGeometry({
 	polygons: [
 		...,
 		{
+			shape: 'right-triangle',
+			side: 'a',
 			a: 3,
 			b: 4,
 			c: 5,
 			polygons: [
 				{
 					shape: 'triangle',
+					side: 't',
 					points: [
 						{ x: 17.6153846, y: 15.6923077, angle: 0.6435011087932844 },
 						{ x: 15.5846154, y: 19.1384615, angle: RIGHT_ANGLE },
@@ -154,8 +160,8 @@ const geometry = generateGeometry({
 					],
 				},
 				{
-					side: 'b',
 					shape: 'square',
+					side: 'b',
 					points: [
 						{ x: 21.0615385, y: 17.7230769, angle: RIGHT_ANGLE },
 						{ x: 19.0307692, y: 21.1692308, angle: RIGHT_ANGLE },
@@ -164,8 +170,8 @@ const geometry = generateGeometry({
 					],
 				},
 				{
-					side: 'a',
 					shape: 'square',
+					side: 'a',
 					points: [
 						{ x: 13, y: 17.6153846, angle: RIGHT_ANGLE },
 						{ x: 15.5846154, y: 19.1384615, angle: RIGHT_ANGLE },
