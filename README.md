@@ -23,7 +23,7 @@ Right triangles can be nested such that the opposite and adjacent sides can be H
 1. **schema**: An `object` specifying the opposite and adjacent lengths of the right angle triangle.
 
 ```js
-generateGeometry({
+const geometry = generateGeometry({
 	a: 3,
 	b: 4,
 })
@@ -32,7 +32,7 @@ generateGeometry({
 Above is a simple schema for the right triangle (3, 4, 5). This is also a Pythagorean Triple. `a` and `b` can be any positive number you would like but I'd suggest not going mad with high numbers since the implementation just uses JavaScript's crude `number` type for claculations.
 
 ```js
-generateGeometry({
+const geometry = generateGeometry({
 	a: {
 		a: 3,
 		b: 4,
@@ -45,12 +45,22 @@ Above is a schema with a nested right triangle. To be precise, it represents the
 
 #### Returns
 
-A geometry `object` containing details for plotting the right triangle on a diagram. The coordinate system has its origin in the bottom left so plotting straight into an SVG or HTML Canvas would render a vertically mirrored image (web language coordinate systems typically have their origin in the top left).
+A geometry `object` containing details for plotting the right triangle on a diagram. The coordinate system has its origin in the bottom left so plotting straight into an SVG or HTML Canvas would render a vertically mirrored image (web language coordinate systems typically have their origin in the top left). Below is the output of the simple right triangle (3, 4, 5) followed by a rendered graphic.
 
-Below is the output of the simple right triangle (3, 4, 5) followed by a rendered graphic.
+**When:**
 
 ```js
-const geometry = {
+const geometry = generateGeometry({
+	a: 3,
+	b: 4,
+})
+```
+
+**Produces:**
+
+```js
+// console.log(JSON.stringify(geometry, null, 2))
+{
 	a: 3,
 	b: 4,
 	c: 5, // Hypotenuse
@@ -99,13 +109,32 @@ const geometry = {
 }
 ```
 
+**Visualised:**
+
 ![Diagram of a right triangle](right-triangle.png)
+
+**On to nested right triangles.**
 
 Below is an example of a nested geometry. The numbers within are limited to seven decimal places but was applied after generation as `generateGeometry` performs no explicit rounding.
 
 Notice the nested polygon with `side: 'c'` has been omitted since it should not be rendered. There is no limit to the amount of nesting but anymore than three levels causes visual overlap.
 
+**When:**
+
 ```js
+const geometry = generateGeometry({
+	a: {
+		a: 3,
+		b: 4,
+	},
+	b: 12,
+})
+```
+
+**Produces:**
+
+```js
+// console.log(JSON.stringify(geometry, null, 2))
 {
 	a: {
 		a: 3,
@@ -161,6 +190,19 @@ Notice the nested polygon with `side: 'c'` has been omitted since it should not 
 ```
 
 Here's a graphic with two levels of nesting. If this looks familiar then you may have once read _Noise: A Flaw in Human Judgement_ by Daniel Kahneman, Olivier Sibony, and Cass Sunstein.
+
+```js
+const geometry = generateGeometry({
+	a: {
+		a: {
+			a: 30,
+			b: 60,
+		},
+		b: 90,
+	},
+	b: 120,
+})
+```
 
 ![Diagram of a Pythagorean Triangle with another attached to one sides and a third attached to that.](right-triangle-nested.png)
 
