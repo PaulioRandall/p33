@@ -45,7 +45,7 @@ Above is a schema with a nested right triangle. To be precise, it represents the
 
 #### Returns
 
-A geometry `object` containing details for plotting the right triangle on a diagram. The coordinate system has its origin in the bottom left so plotting straight into an SVG or HTML Canvas would render a vertically mirrored image (web language coordinate systems typically have their origin in the top left). Below is the output of the simple right triangle (3, 4, 5) followed by a rendered graphic.
+A geometry `object` containing details for plotting the right triangle on a diagram. The coordinate system has its origin in the bottom left so plotting straight into an SVG or HTML Canvas would render a vertically mirrored image (web language coordinate systems typically have their origin in the top left). Below shows off the simple right triangle (3, 4, 5).
 
 ```js
 const geometry = generateGeometry({
@@ -181,7 +181,9 @@ const geometry = generateGeometry({
 
 **Multiple levels of nesting.**
 
-Here's a graphic with two levels of nesting. If this looks familiar then you may have once read _Noise: A Flaw in Human Judgement_ by Daniel Kahneman, Olivier Sibony, and Cass Sunstein. This was my motivation for creating this library. I wanted to create an interactive graphic that allowed the user to adjust each square and see the effect on other squares. The biggest square is Mean Squared Error (MSE) while the other squares represent bias and a breakdown of various types of noise.
+Here's a graphic with two levels of nesting. If this looks familiar then you may have once read _Noise: A Flaw in Human Judgement_ by Daniel Kahneman, Olivier Sibony, and Cass Sunstein.
+
+This was my motivation for creating this library. I wanted to create an interactive graphic that allowed the user to adjust each square and see the effect on other squares. The biggest square is to represent mean squared error (C1) while the other squares represent bias (B1) and a breakdown of the various types of noise (A).
 
 ```js
 const geometry = generateGeometry({
