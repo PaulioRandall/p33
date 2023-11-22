@@ -47,16 +47,12 @@ Above is a schema with a nested right triangle. To be precise, it represents the
 
 A geometry `object` containing details for plotting the right triangle on a diagram. The coordinate system has its origin in the bottom left so plotting straight into an SVG or HTML Canvas would render a vertically mirrored image (web language coordinate systems typically have their origin in the top left). Below is the output of the simple right triangle (3, 4, 5) followed by a rendered graphic.
 
-**When:**
-
 ```js
 const geometry = generateGeometry({
 	a: 3,
 	b: 4,
 })
 ```
-
-**Produces:**
 
 ```js
 // console.log(JSON.stringify(geometry, null, 2))
@@ -109,17 +105,13 @@ const geometry = generateGeometry({
 }
 ```
 
-**Visualised:**
-
 ![Diagram of a right triangle](right-triangle.png)
 
 **On to nested right triangles.**
 
-Below is an example of a nested geometry. The numbers within are limited to seven decimal places but was applied after generation as `generateGeometry` performs no explicit rounding.
+Below is an example. The numbers within are limited to seven decimal places but was applied after generation as `generateGeometry` performs no explicit rounding.
 
 Notice the nested polygon with `side: 'c'` has been omitted since it should not be rendered. There is no limit to the amount of nesting but anymore than three levels causes visual overlap.
-
-**When:**
 
 ```js
 const geometry = generateGeometry({
@@ -130,8 +122,6 @@ const geometry = generateGeometry({
 	b: 12,
 })
 ```
-
-**Produces:**
 
 ```js
 // console.log(JSON.stringify(geometry, null, 2))
@@ -189,7 +179,9 @@ const geometry = generateGeometry({
 }
 ```
 
-Here's a graphic with two levels of nesting. If this looks familiar then you may have once read _Noise: A Flaw in Human Judgement_ by Daniel Kahneman, Olivier Sibony, and Cass Sunstein.
+**Multiple levels of nesting.**
+
+Here's a graphic with two levels of nesting. If this looks familiar then you may have once read _Noise: A Flaw in Human Judgement_ by Daniel Kahneman, Olivier Sibony, and Cass Sunstein. This was my motivation for creating this library. I wanted to create an interactive graphic that allowed the user to adjust each square and see the effect on other squares. The biggest square is Mean Squared Error (MSE) while the other squares represent bias and a breakdown of various types of noise.
 
 ```js
 const geometry = generateGeometry({
@@ -212,7 +204,7 @@ const geometry = generateGeometry({
 
 Only basic styling is applied so you'll need to descend the element tree, setting your own styles, if you want something pretty.
 
-Alternatively, you can render the polygons manually using a canvas or web framework. I have a Svelte component that renders the geometry so I can interact with it.
+You can render the geometry directly (without this function) using a canvas or web framework tooling. I've created a Svelte component so I can add user interaction.
 
 #### Arguments
 
