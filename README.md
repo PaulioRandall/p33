@@ -214,4 +214,4 @@ You can render the geometry directly (without this function) using a canvas or w
 
 #### Returns
 
-A `HTMLElement` representing an `<svg>`. Appending this to an appropriate DOM element will render it on a web page.
+A `HTMLElement` representing an `<svg>` containing the shapes using `<polygon>`. Appending this to an appropriate DOM element will render it on a web page.
