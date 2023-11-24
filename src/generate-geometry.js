@@ -66,6 +66,7 @@ const generatePolygons = (schema, root = true) => {
 	if (root) {
 		const bounds = findBounds(schema.polygons)
 		translateSchemaBy(schema, -bounds.left, -bounds.top)
+		computeSchemaCentroids(schema)
 
 		const size = calcSize(bounds)
 		schema.width = size.width
@@ -122,6 +123,7 @@ const squarePolygon = (len, side) => {
 	return {
 		shape: 'square',
 		side: side,
+		len: len,
 		points: [
 			newPoint(0, 0, RIGHT_ANGLE),
 			newPoint(len, 0, RIGHT_ANGLE),
@@ -197,9 +199,8 @@ const rotatePointsBy = (points, origin, amount) => {
 		const v = new Victor(point.x - origin.x, point.y - origin.y)
 		v.rotate(-amount)
 
-		// Rounding because fails test due to miniscule JS float rounding.
-		;(point.x = v.x + origin.x), 9
-		;(point.y = v.y + origin.y), 9
+		point.x = v.x + origin.x
+		point.y = v.y + origin.y
 	}
 }
 
@@ -248,6 +249,80 @@ const calcSize = (bounds) => {
 		width: bounds.right - bounds.left,
 		height: bounds.bot - bounds.top,
 	}
+}
+
+const computeSchemaCentroids = (schema) => {
+	for (const poly of schema.polygons) {
+		if (poly.polygons) {
+			computeSchemaCentroids(poly)
+			continue
+		}
+
+		if (poly.shape === 'triangle') {
+			computeTriangleInCenter(poly)
+			continue
+		}
+
+		computePolygonCenter(poly)
+	}
+}
+
+const computeTriangleInCenter = (tri) => {
+	const va = new Victor(tri.points[0].x, tri.points[0].y)
+	const vb = new Victor(tri.points[1].x, tri.points[1].y)
+	const vc = new Victor(tri.points[2].x, tri.points[2].y)
+
+	const lenC = va.distance(vb)
+	const lenA = vb.distance(vc)
+	const lenB = vc.distance(va)
+
+	const c = {
+		x: 0,
+		y: 0,
+	}
+
+	c.x = lenA * va.x
+	c.x += lenB * vb.x
+	c.x += lenC * vc.x
+	c.x /= lenA + lenB + lenC
+
+	c.y = lenA * va.y
+	c.y += lenB * vb.y
+	c.y += lenC * vc.y
+	c.y /= lenA + lenB + lenC
+
+	tri.center = c
+	tri.len = Math.min(lenA, lenB, lenC)
+	tri.area = (lenA * lenC) / 2
+}
+
+const computePolygonCenter = (poly) => {
+	const points = poly.points
+
+	const c = {
+		x: 0,
+		y: 0,
+	}
+
+	const len = points.length
+	let shoelaceArea = 0
+
+	for (let i = 0; i < len; i++) {
+		const p = points[i]
+		const p2 = i < len - 1 ? points[i + 1] : points[0]
+		const intersect = p.x * p2.y - p2.x * p.y
+		c.x += (p.x + p2.x) * intersect
+		c.y += (p.y + p2.y) * intersect
+		shoelaceArea += intersect
+	}
+
+	const area = shoelaceArea * 0.5
+	const postSum = 1 / (6 * area)
+	c.x *= postSum
+	c.y *= postSum
+
+	poly.area = area
+	poly.center = c
 }
 
 export default generatePolygons
