@@ -60,13 +60,18 @@ const generatePolygons = (schema, root = true) => {
 	const cp = squarePolygon(c, 'c')
 
 	schema.shape = 'right-triangle'
-	schema.polygons = [tp, cp, bp, ap]
+	schema.polygons = {
+		t: tp,
+		c: cp,
+		b: bp,
+		a: ap,
+	}
 	schema.origin = { x: 0, y: 0 }
 
 	if (root) {
 		const bounds = findBounds(schema.polygons)
 		translateSchemaBy(schema, -bounds.left, -bounds.top)
-		computeSchemaCentroids(schema)
+		computeSchemaCenters(schema)
 
 		const size = calcSize(bounds)
 		schema.width = size.width
@@ -142,7 +147,7 @@ const changeSchemaOriginPoint = (schema, index) => {
 }
 
 const getPolygonBasePoints = (polygons) => {
-	const cp = polygons.find((poly) => poly.side === 'c')
+	const cp = Object.values(polygons).find((poly) => poly.side === 'c')
 
 	if (cp.polygons) {
 		return getPolygonBasePoints(cp.polygons)
@@ -158,8 +163,8 @@ const translateSchemaBy = (schema, x, y) => {
 }
 
 const translatePolygonsBy = (polygons, x, y) => {
-	for (const poly of polygons) {
-		translatePolygonBy(poly, x, y)
+	for (const name in polygons) {
+		translatePolygonBy(polygons[name], x, y)
 	}
 }
 
@@ -180,8 +185,8 @@ const rotateSchemaBy = (schema, amount) => {
 }
 
 const rotatePolygonsBy = (polygons, origin, amount) => {
-	for (const poly of polygons) {
-		rotatePolygonBy(poly, origin, amount)
+	for (const name in polygons) {
+		rotatePolygonBy(polygons[name], origin, amount)
 	}
 }
 
@@ -205,8 +210,11 @@ const rotatePointsBy = (points, origin, amount) => {
 }
 
 const removeSquarePolygon = (schema, side) => {
-	const i = schema.polygons.findIndex((poly) => poly.side === 'c')
-	schema.polygons.splice(i, 1)
+	for (const name in schema.polygons) {
+		if (schema.polygons[name].side === 'c') {
+			delete schema.polygons[name]
+		}
+	}
 }
 
 const newPoint = (x, y, angle) => ({ x, y, angle })
@@ -224,13 +232,13 @@ const findBounds = (polygons) => {
 }
 
 const updateBoundsFromPolygons = (polygons, bounds) => {
-	for (const poly of polygons) {
-		if (poly.polygons) {
-			updateBoundsFromPolygons(poly.polygons, bounds)
+	for (const name in polygons) {
+		if (polygons[name].polygons) {
+			updateBoundsFromPolygons(polygons[name].polygons, bounds)
 			continue
 		}
 
-		for (const point of poly.points) {
+		for (const point of polygons[name].points) {
 			updateBoundsFromPoint(point, bounds)
 		}
 	}
@@ -251,10 +259,12 @@ const calcSize = (bounds) => {
 	}
 }
 
-const computeSchemaCentroids = (schema) => {
-	for (const poly of schema.polygons) {
+const computeSchemaCenters = (schema) => {
+	for (const name in schema.polygons) {
+		const poly = schema.polygons[name]
+
 		if (poly.polygons) {
-			computeSchemaCentroids(poly)
+			computeSchemaCenters(poly)
 			continue
 		}
 

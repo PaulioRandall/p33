@@ -69,8 +69,8 @@ describe('generatePolygons', () => {
 				x: 0,
 				y: 2.4,
 			},
-			polygons: [
-				{
+			polygons: {
+				t: {
 					shape: 'triangle',
 					side: 't',
 					points: [
@@ -85,7 +85,7 @@ describe('generatePolygons', () => {
 						y: 5.4,
 					},
 				},
-				{
+				c: {
 					shape: 'square',
 					side: 'c',
 					points: [
@@ -101,7 +101,7 @@ describe('generatePolygons', () => {
 						y: 4.9,
 					},
 				},
-				{
+				b: {
 					shape: 'square',
 					side: 'b',
 					points: [
@@ -117,7 +117,7 @@ describe('generatePolygons', () => {
 						y: 2.8,
 					},
 				},
-				{
+				a: {
 					shape: 'square',
 					side: 'a',
 					points: [
@@ -133,7 +133,7 @@ describe('generatePolygons', () => {
 						y: 7.7,
 					},
 				},
-			],
+			},
 		}
 
 		const act = generateGeometry(given)
@@ -168,8 +168,8 @@ describe('generatePolygons', () => {
 				x: 0,
 				y: 4.6153846,
 			},
-			polygons: [
-				{
+			polygons: {
+				t: {
 					shape: 'triangle',
 					side: 't',
 					points: [
@@ -184,7 +184,7 @@ describe('generatePolygons', () => {
 						y: 14.6153846,
 					},
 				},
-				{
+				c: {
 					shape: 'square',
 					side: 'c',
 					points: [
@@ -200,7 +200,7 @@ describe('generatePolygons', () => {
 						y: 11.1153846,
 					},
 				},
-				{
+				b: {
 					shape: 'square',
 					side: 'b',
 					points: [
@@ -216,7 +216,7 @@ describe('generatePolygons', () => {
 						y: 7.8461538,
 					},
 				},
-				{
+				a: {
 					shape: 'right-triangle',
 					side: 'a',
 					a: 3,
@@ -226,8 +226,8 @@ describe('generatePolygons', () => {
 						x: 13,
 						y: 17.6153846,
 					},
-					polygons: [
-						{
+					polygons: {
+						t: {
 							shape: 'triangle',
 							side: 't',
 							points: [
@@ -246,7 +246,7 @@ describe('generatePolygons', () => {
 								y: 17.7692308,
 							},
 						},
-						{
+						b: {
 							shape: 'square',
 							side: 'b',
 							points: [
@@ -262,7 +262,7 @@ describe('generatePolygons', () => {
 								y: 18.4307692,
 							},
 						},
-						{
+						a: {
 							shape: 'square',
 							side: 'a',
 							points: [
@@ -278,9 +278,9 @@ describe('generatePolygons', () => {
 								y: 19.6692308,
 							},
 						},
-					],
+					},
 				},
-			],
+			},
 		}
 
 		const act = generateGeometry(given)
