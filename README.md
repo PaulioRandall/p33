@@ -1,3 +1,7 @@
+**Archived**
+
+Now that I have P45 this library loses half its value. I'm archiving so I can plunder for parts later. 
+
 # P33
 
 A simple library for generating coordinates of Pythagorean Triangles that are intended for visualisation.
